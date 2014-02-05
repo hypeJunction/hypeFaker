@@ -3,6 +3,10 @@ hypeFaker
 
 Populates Elgg sites with demo data for development, testing and preview purposes.
 
+## Dev
+
+To install dependencies, run ```composer install```
+
 ## Scope
 
 * Generate users - create fake user accounts with avatars and profile information
