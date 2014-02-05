@@ -1,0 +1,17 @@
+{
+	"name": "hypeJunction/Gateway",
+	"description": "Generate fake data for your Elgg site",
+	"homepage": "http://hypejunction.com",
+	"authors": [
+		{
+			"name": "Ismayil Khayredinov",
+			"email": "ismayil.khayredinov@gmail.com"
+		}
+	],
+	"config": {
+		"vendor-dir": "vendors"
+	},
+	"require": {
+		"fzaninotto/faker": "v1.3.0"
+	}
+}
