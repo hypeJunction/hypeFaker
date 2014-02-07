@@ -3,9 +3,7 @@ hypeFaker
 
 Populates Elgg sites with demo data for development, testing and preview purposes.
 
-## Dev
-
-To install dependencies, run ```composer install```
+[Buy me a beer!](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=P7QA9CFMENBKA)
 
 ## Scope
 
@@ -19,3 +17,19 @@ To install dependencies, run ```composer install```
 * Generate pages - create page trees
 * Generate wire posts - create wire threads
 * Generate messages - create inbox and outbox messages
+
+
+## Credits / Acknolwedgements ##
+
+* This plugin depends on the wonderful PHP library by François Zaninotto - https://github.com/fzaninotto/Faker
+
+
+## Git Dev
+
+If grabbing the plugin from Github, install dependencies by running ```composer install```
+
+
+## Screenshots ##
+
+![alt text](https://raw.github.com/hypeJunction/hypeFaker/master/screenshots/admin.png "Admin Interface")
+![alt text](https://raw.github.com/hypeJunction/hypeFaker/master/screenshots/content.png "Generated Content")

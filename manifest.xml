@@ -18,4 +18,14 @@
 		<version>1.9</version>
     </requires>
 
+	<screenshot>
+		<description>Admin interface</description>
+		<path>screenshots/admin.png</path>
+	</screenshot>
+
+	<screenshot>
+		<description>Generated Content</description>
+		<path>screenshots/content.png</path>
+	</screenshot>
+
 </plugin_manifest>
