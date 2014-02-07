@@ -34,13 +34,33 @@ function add_page($owner, $container, $parent = null) {
 	}
 
 	if ($page->save()) {
-		$page->annotate('page', $page->description, $page->access_id);
+		$page->annotate('page', $page->description, $page->access_id, $page->owner_guid);
+
 		elgg_create_river_item(array(
 			'view' => 'river/object/page/create',
 			'action_type' => 'create',
-			'subject_guid' => $owner->guid,
+			'subject_guid' => $page->owner_guid,
 			'object_guid' => $page->getGUID(),
 		));
+
+		// add some revisions
+		$users = elgg_get_entities_from_metadata(array(
+			'types' => 'user',
+			'limit' => rand(1, 10),
+			'order_by' => 'RAND()',
+			'metadata_names' => '__faker',
+		));
+		foreach ($users as $user) {
+			if ($page->canAnnotate($user->guid, 'page')) {
+				$last_revision = $faker->text(500);
+				$page->annotate('page', $last_annotation, $page->access_id, $user->guid);
+			}
+		}
+
+		if (!empty($last_revision)) {
+			$page->description = $last_revision;
+			$page->save();
+		}
 
 		return $page;
 	}
