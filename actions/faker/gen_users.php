@@ -59,7 +59,8 @@ if (!empty($users)) {
 		$icon_sizes = elgg_get_config('icon_sizes');
 
 		$files = array();
-		$profile_icon_url = $faker->imageURL(800, 600, 'people');
+		$avatar_error = false;
+		$profile_icon_url = $faker->imageURL();
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $profile_icon_url);
@@ -123,6 +124,8 @@ if (!empty($users)) {
 
 		if ($user->save()) {
 			$success++;
+			set_user_notification_setting($user->guid, 'email', false);
+			set_user_notification_setting($user->guid, 'site', true);
 		} else {
 			$error++;
 		}

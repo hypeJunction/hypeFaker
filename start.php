@@ -13,7 +13,6 @@ namespace hypeJunction\Faker;
 
 const PLUGIN_ID = 'hypeFaker';
 const PLUGIN_ALIAS = 'faker';
-
 const LOCALE = 'en_US';
 
 // Composer autoload
@@ -32,10 +31,15 @@ function init() {
 	elgg_register_action('faker/gen_groups', __DIR__ . '/actions/faker/gen_groups.php', 'admin');
 	elgg_register_action('faker/gen_group_members', __DIR__ . '/actions/faker/gen_group_members.php', 'admin');
 	elgg_register_action('faker/gen_blogs', __DIR__ . '/actions/faker/gen_blogs.php', 'admin');
+	elgg_register_action('faker/gen_bookmarks', __DIR__ . '/actions/faker/gen_bookmarks.php', 'admin');
+	elgg_register_action('faker/gen_files', __DIR__ . '/actions/faker/gen_files.php', 'admin');
+	elgg_register_action('faker/gen_pages', __DIR__ . '/actions/faker/gen_pages.php', 'admin');
+	elgg_register_action('faker/gen_wire', __DIR__ . '/actions/faker/gen_wire.php', 'admin');
+	elgg_register_action('faker/gen_messages', __DIR__ . '/actions/faker/gen_messages.php', 'admin');
 
 	elgg_extend_view('css/admin', 'admin/developers/faker/css');
 	elgg_register_js('admin.faker', elgg_get_simplecache_url('js', 'admin/faker/js'));
-	
+
 	// Add an admin menu item
 	elgg_register_menu_item('page', array(
 		'name' => 'faker',

@@ -43,7 +43,7 @@ for ($i = 0; $i < $count; $i++) {
 		$blog->container_guid = $container->guid;
 		$blog->status = $statuses[array_rand($statuses, 1)];
 
-		$access = $access_array[array_rand($access_array, 1)];
+		$access = array_rand($access_array, 1);
 		if ($blog->status == 'unsaved_draft' || $blog->status == 'draft') {
 			$blog->access_id = ACCESS_PRIVATE;
 			$blog->future_access = $access;
@@ -86,7 +86,7 @@ for ($i = 0; $i < $count; $i++) {
 	}
 }
 
-if ($errors) {
+if ($error) {
 	system_message(elgg_echo('faker:gen_blogs:error', array($success, $error)));
 } else {
 	system_message(elgg_echo('faker:gen_blogs:success', array($success)));

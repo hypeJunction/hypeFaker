@@ -63,7 +63,7 @@ foreach (array(ACCESS_PRIVATE, ACCESS_LOGGED_IN, ACCESS_PUBLIC) as $visibility) 
 				$icon_sizes = elgg_get_config('icon_sizes');
 
 				$files = array();
-				$profile_icon_url = $faker->imageURL(800, 600, 'business');
+				$profile_icon_url = $faker->imageURL();
 
 				$ch = curl_init();
 				curl_setopt($ch, CURLOPT_URL, $profile_icon_url);
@@ -151,7 +151,7 @@ if (!empty($groups)) {
 	}
 }
 
-if ($errors) {
+if ($error) {
 	system_message(elgg_echo('faker:gen_groups:error', array($success, $error)));
 } else {
 	system_message(elgg_echo('faker:gen_groups:success', array($success)));

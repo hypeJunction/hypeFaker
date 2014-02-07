@@ -14,11 +14,6 @@ $fake_user_count = elgg_get_entities_from_metadata(array(
 		));
 
 if ($fake_user_count) {
-	$fakes = elgg_list_entities_from_metadata(array(
-		//'types' => 'user',
-		'metadata_names' => '__faker',
-	));
-
 	$forms .= elgg_view_form('faker/gen_friends');
 	if (elgg_is_active_plugin('groups')) {
 		$forms .= elgg_view_form('faker/gen_groups');
@@ -35,8 +30,31 @@ if ($fake_user_count) {
 	if (elgg_is_active_plugin('blog')) {
 		$forms .= elgg_view_form('faker/gen_blogs');
 	}
+
+	if (elgg_is_active_plugin('bookmarks')) {
+		$forms .= elgg_view_form('faker/gen_bookmarks');
+	}
+
+	if (elgg_is_active_plugin('file')) {
+		$forms .= elgg_view_form('faker/gen_files');
+	}
+
+	if (elgg_is_active_plugin('pages')) {
+		$forms .= elgg_view_form('faker/gen_pages');
+	}
+
+	if (elgg_is_active_plugin('thewire')) {
+		$forms .= elgg_view_form('faker/gen_wire');
+	}
+
+	if (elgg_is_active_plugin('messages')) {
+		$forms .= elgg_view_form('faker/gen_messages');
+	}
 }
 
+$fakes = elgg_list_entities_from_metadata(array(
+	'metadata_names' => '__faker',
+		));
 $content = '<div id="faker-log">' . $fakes . '</div>';
 $delete = elgg_view('output/url', array(
 	'text' => elgg_echo('faker:delete'),
