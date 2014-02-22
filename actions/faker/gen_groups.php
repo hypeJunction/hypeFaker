@@ -16,7 +16,7 @@ $featured_count = (int) get_input('featured_count');
 $faker = F\Factory::create(LOCALE);
 
 foreach (array(ACCESS_PRIVATE, ACCESS_LOGGED_IN, ACCESS_PUBLIC) as $visibility) {
-	foreach (array(ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY, ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED) as $content_access_mode) {
+	foreach (array(get_group_content_access_mode('members_only'), get_group_content_access_mode('unrestricted')) as $content_access_mode) {
 		foreach (array(ACCESS_PRIVATE, ACCESS_PUBLIC) as $membership) {
 
 			for ($i = 0; $i < $count; $i++) {
