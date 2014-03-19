@@ -18,6 +18,8 @@ const LOCALE = 'en_US';
 // Composer autoload
 require_once __DIR__ . '/vendors/autoload.php';
 
+require_once __DIR__ . '/lib/functions.php';
+
 if (!is_callable('elgg_get_version')) {
 	require_once __DIR__ . '/lib/forward_compat.php';
 }
