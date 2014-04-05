@@ -1,6 +1,7 @@
 {
 	"name": "hypeJunction/Faker",
 	"repository": "hypeJunction/hypeFaker",
+	"version": "1.0.2",
 	"description": "Generate fake data for your Elgg site",
 	"type": "elgg-plugin",
 	"keywords": [
