@@ -1,7 +1,15 @@
 {
-	"name": "hypeJunction/Gateway",
+	"name": "hypeJunction/Faker",
+	"repository": "hypeJunction/hypeFaker",
 	"description": "Generate fake data for your Elgg site",
+	"type": "elgg-plugin",
+	"keywords": [
+        "elgg",
+        "plugin",
+		"demo"
+    ],
 	"homepage": "http://hypejunction.com",
+	"license": "GNU GPL 2",
 	"authors": [
 		{
 			"name": "Ismayil Khayredinov",
@@ -12,6 +20,7 @@
 		"vendor-dir": "vendors"
 	},
 	"require": {
+		"composer/installers": ">=1.0.8",
 		"fzaninotto/faker": "v1.3.0"
 	}
 }
