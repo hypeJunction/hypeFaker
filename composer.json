@@ -1,5 +1,5 @@
 {
-	"name": "hypejunction/faker",
+	"name": "hypejunction/hypefaker",
 	"repository": "hypeJunction/hypeFaker",
 	"version": "1.0.2",
 	"description": "Generate fake data for your Elgg site",
@@ -14,7 +14,7 @@
 	"authors": [
 		{
 			"name": "Ismayil Khayredinov",
-			"email": "ismayil.khayredinov@gmail.com"
+			"email": "ismayil@hypejunction.com"
 		}
 	],
 	"config": {

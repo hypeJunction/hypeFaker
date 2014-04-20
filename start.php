@@ -6,7 +6,7 @@
  * @package hypeJunction
  * @subpackage Faker
  *
- * @author Ismayil Khayredinov <ismayil.khayredinov@gmail.com>
+ * @author Ismayil Khayredinov <ismayil@hypejunction.com>
  */
 
 namespace hypeJunction\Faker;
