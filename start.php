@@ -16,13 +16,14 @@ const PLUGIN_ALIAS = 'faker';
 const LOCALE = 'en_US';
 
 // Composer autoload
-require_once __DIR__ . '/vendors/autoload.php';
+require_once dirname(dirname(dirname(__FILE__))) . '/vendor/autoload.php';
 
 require_once __DIR__ . '/lib/functions.php';
 
-if (!is_callable('elgg_get_version')) {
+if (\hypeJunction\Integration::isElggVersionBelow('1.9.0')) {
 	require_once __DIR__ . '/lib/forward_compat.php';
 }
+
 elgg_register_event_handler('init', 'system', __NAMESPACE__ . '\\init');
 
 /**
