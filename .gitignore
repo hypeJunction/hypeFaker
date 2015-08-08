@@ -3,3 +3,9 @@
 .htaccess
 robots.txt
 /nbproject/
+/.sass-cache/
+/node_modules/
+/build/
+/releases/
+/vendor/
+composer.lock
