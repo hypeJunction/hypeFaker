@@ -1,15 +1,13 @@
 <?php
 
-namespace hypeJunction\Faker;
-
-use ElggObject;
-use Faker as F;
+use Faker\Factory;
+use const hypeJunction\Faker\LOCALE;
 
 set_time_limit(0);
 
 function add_wire($owner, $parent = null) {
 
-	$faker = F\Factory::create(LOCALE);
+	$faker = Factory::create(LOCALE);
 
 	$wire = new ElggObject();
 	$wire->subtype = 'thewire';

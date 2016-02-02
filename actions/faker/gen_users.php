@@ -1,10 +1,6 @@
 <?php
 
-namespace hypeJunction\Faker;
-
-use ElggFile;
-use Exception;
-use Faker as F;
+use const hypeJunction\Faker\LOCALE;
 
 set_time_limit(0);
 
@@ -15,7 +11,7 @@ $count = (int) get_input('count');
 $friends_count = (int) rand(1, $count);
 $password = get_input('password');
 
-$faker = F\Factory::create(LOCALE);
+$faker = F::create(LOCALE);
 
 for ($i = 0; $i < $count; $i++) {
 

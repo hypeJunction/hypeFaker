@@ -1,10 +1,7 @@
 <?php
 
-namespace hypeJunction\Faker;
-
-use ElggBatch;
-use ElggObject;
-use Faker as F;
+use Faker\Factory;
+use const hypeJunction\Faker\LOCALE;
 
 set_time_limit(0);
 
@@ -12,7 +9,7 @@ $success = $error = 0;
 
 $count = (int) get_input('count');
 
-$faker = F\Factory::create(LOCALE);
+$faker = Factory::create(LOCALE);
 
 global $messagesendflag;
 $messagesendflag = 1;

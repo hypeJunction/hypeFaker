@@ -1,9 +1,5 @@
 <?php
 
-namespace hypeJunction\Faker;
-
-use ElggBatch;
-
 set_time_limit(0);
 
 $rel_member = $rel_invited = $rel_membership_request = 0;

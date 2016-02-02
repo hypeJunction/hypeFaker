@@ -1,9 +1,7 @@
 <?php
 
-namespace hypeJunction\Faker;
-
-use ElggBlog;
-use Faker as F;
+use Faker\Factory;
+use const hypeJunction\Faker\LOCALE;
 
 set_time_limit(0);
 
@@ -11,7 +9,7 @@ $success = $error = 0;
 
 $count = (int) get_input('count');
 
-$faker = F\Factory::create(LOCALE);
+$faker = Factory::create(LOCALE);
 
 $statuses = array('unsaved_draft', 'draft', 'published');
 

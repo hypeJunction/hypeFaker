@@ -1,15 +1,13 @@
 <?php
 
-namespace hypeJunction\Faker;
-
-use ElggObject;
-use Faker as F;
+use Faker\Factory;
+use const hypeJunction\Faker\LOCALE;
 
 set_time_limit(0);
 
 function add_page($owner, $container, $parent = null) {
 
-	$faker = F\Factory::create(LOCALE);
+	$faker = Factory::create(LOCALE);
 
 	$access_array = get_write_access_array($owner->guid);
 	$access_id = array_rand($access_array, 1);

@@ -15,14 +15,7 @@ const PLUGIN_ID = 'hypeFaker';
 const PLUGIN_ALIAS = 'faker';
 const LOCALE = 'en_US';
 
-// Composer autoload
-require_once dirname(dirname(dirname(__FILE__))) . '/vendor/autoload.php';
-
-require_once __DIR__ . '/lib/functions.php';
-
-if (\hypeJunction\Integration::isElggVersionBelow('1.9.0')) {
-	require_once __DIR__ . '/lib/forward_compat.php';
-}
+require_once __DIR__ . '/autoloader.php';
 
 elgg_register_event_handler('init', 'system', __NAMESPACE__ . '\\init');
 

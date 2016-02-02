@@ -16,13 +16,15 @@
 	"extra": {
 		"installer-name": "hypeFaker"
 	},
-	"config": {
-		"vendor-dir": "/vendor/"
-	},
 	"require": {
-		"php": ">=5.3.3",
-		"composer/installers": "1.*",
-		"hypejunction/hypeapps": "4.*",
-		"fzaninotto/faker": "1.5.*"
+		"php": ">=5.5",
+		"composer/installers": "~1.0",
+		"hypejunction/hypeapps": "*",
+		"fzaninotto/faker": "~1.5"
+	},
+	"autoload": {
+		"psr-0": {
+			"": "classes/"
+		}
 	}
 }

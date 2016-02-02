@@ -1,9 +1,5 @@
 <?php
 
-namespace hypeJunction\Faker;
-
-use ElggBatch;
-
 set_time_limit(0);
 
 $hidden = access_get_show_hidden_status();

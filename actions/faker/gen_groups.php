@@ -1,10 +1,8 @@
 <?php
 
-namespace hypeJunction\Faker;
-
-use ElggFile;
-use ElggGroup;
-use Faker as F;
+use Faker\Factory;
+use const hypeJunction\Faker\LOCALE;
+use function hypeJunction\Faker\get_group_content_access_mode;
 
 set_time_limit(0);
 
@@ -13,7 +11,7 @@ $success = $error = 0;
 $count = (int) get_input('count');
 $featured_count = (int) get_input('featured_count');
 
-$faker = F\Factory::create(LOCALE);
+$faker = Factory::create(LOCALE);
 
 foreach (array(ACCESS_PRIVATE, ACCESS_LOGGED_IN, ACCESS_PUBLIC) as $visibility) {
 	foreach (array(get_group_content_access_mode('members_only'), get_group_content_access_mode('unrestricted')) as $content_access_mode) {
