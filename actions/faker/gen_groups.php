@@ -2,7 +2,25 @@
 
 use Faker\Factory;
 
-use function hypeJunction\Faker\get_group_content_access_mode;
+function hypefaker_get_group_content_access_mode($mode) {
+	switch ($mode) {
+		case 'members_only' :
+			if (is_callable('ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY')) {
+				return ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY;
+			} else {
+				return 'members_only';
+			}
+			break;
+
+		case 'unrestricted' :
+			if (is_callable('ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED')) {
+				return ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
+			} else {
+				return 'unrestricted';
+			}
+			break;
+	}
+}
 
 set_time_limit(0);
 
@@ -15,7 +33,7 @@ $locale = elgg_get_plugin_setting('locale', 'hypeFaker', 'en_US');
 $faker = Factory::create($locale);
 
 foreach (array(ACCESS_PRIVATE, ACCESS_LOGGED_IN, ACCESS_PUBLIC) as $visibility) {
-	foreach (array(get_group_content_access_mode('members_only'), get_group_content_access_mode('unrestricted')) as $content_access_mode) {
+	foreach (array(hypefaker_get_group_content_access_mode('members_only'), hypefaker_get_group_content_access_mode('unrestricted')) as $content_access_mode) {
 		foreach (array(ACCESS_PRIVATE, ACCESS_PUBLIC) as $membership) {
 
 			for ($i = 0; $i < $count; $i++) {
