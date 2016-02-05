@@ -31,9 +31,6 @@ function hypefaker_init() {
 	elgg_register_action('faker/gen_wire', __DIR__ . '/actions/faker/gen_wire.php', 'admin');
 	elgg_register_action('faker/gen_messages', __DIR__ . '/actions/faker/gen_messages.php', 'admin');
 
-	elgg_extend_view('css/admin', 'admin/developers/faker/css');
-	elgg_register_js('admin.faker', elgg_get_simplecache_url('js', 'admin/faker/js'));
-
 	// Add an admin menu item
 	elgg_register_menu_item('page', array(
 		'name' => 'faker',

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * UI for generating fake data
  */
@@ -77,3 +76,13 @@ echo elgg_view_module('aside', elgg_echo('faker:data'), $content, array(
 echo '</div>';
 echo '</div>';
 echo '</div>';
+?>
+<style>
+	#faker-log {
+		min-height: 400px;
+		overflow-y: scroll;
+		padding: 10px;
+		background: #f4f4f4;
+		border: 1px solid #e8e8e8;
+	}
+</style>
