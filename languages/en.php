@@ -12,6 +12,8 @@ $english = array(
 	'faker:gen_users' => 'Generate users',
 	'faker:gen_users:count' => 'Number of users to generate',
 	'faker:gen_users:password' => 'Default password to set',
+	'faker:gen_users:email_domain' => 'Email Domain (do not accidentally spam people)',
+	
 	'faker:gen_users:success' => '%s user accounts were created',
 	'faker:gen_users:error' => '%s user accounts were created<br />%s accounts failed to create with following messages (%s)',
 

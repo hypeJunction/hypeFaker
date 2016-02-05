@@ -10,6 +10,7 @@ $exceptions = array();
 $count = (int) get_input('count');
 $friends_count = (int) rand(1, $count);
 $password = get_input('password');
+$domain = get_input('email_domain');
 
 $locale = elgg_get_plugin_setting('locale', 'hypeFaker', 'en_US');
 $faker = Factory::create($locale);
@@ -20,8 +21,21 @@ for ($i = 0; $i < $count; $i++) {
 		$password = generate_random_cleartext_password();
 	}
 
+	$name = $faker->name;
+	$username = strtolower(str_replace(' ', '', $name));
+	$username = iconv('UTF-8', 'ASCII//TRANSLIT', $username);
+	$blacklist = '/[\x{0080}-\x{009f}\x{00a0}\x{2000}-\x{200f}\x{2028}-\x{202f}\x{3000}\x{e000}-\x{f8ff}]/u';
+	$blacklist2 = array(' ', '\'', '/', '\\', '"', '*', '&', '?', '#', '%', '^', '(', ')', '{', '}', '[', ']', '~', '?', '<', '>', ';', '|', '¬', '`', '@', '-', '+', '=');
+	$username = preg_replace($blacklist, '', $username);
+	$username = str_replace($blacklist2, '.', $username);
+	if ($domain) {
+		$email = "{$username}@{$domain}";
+	} else {
+		$email = "{$username}@{$faker->safeEmailDomain}";
+	}
+
 	try {
-		$guid = register_user($faker->userName, $password, $faker->name, $faker->safeEmail);
+		$guid = register_user($username, $password, $name, $email);
 	} catch (Exception $e) {
 		$exceptions[] = $e;
 	}
@@ -51,7 +65,7 @@ if (!empty($users)) {
 		$user->phone = $faker->phoneNumber;
 		$user->mobile = $faker->phoneNumber;
 		$user->website = $faker->url;
-		$user->twitter = "@" . $faker->word;
+		$user->twitter = "@" . $username;
 
 		$icon_sizes = elgg_get_config('icon_sizes');
 

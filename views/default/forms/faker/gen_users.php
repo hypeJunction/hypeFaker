@@ -16,8 +16,17 @@ echo '</div>';
 echo '<div>';
 echo '<label>' . elgg_echo('faker:gen_users:password') . '</label>';
 echo elgg_view('input/text', array(
-	'name' => 'passowrd',
+	'name' => 'password',
 	'value' => '123456',
+	'minlength' => 6
+));
+echo '</div>';
+
+echo '<div>';
+echo '<label>' . elgg_echo('faker:gen_users:email_domain') . '</label>';
+echo elgg_view('input/text', array(
+	'name' => 'email_domain',
+	'value' => parse_url(elgg_get_site_url(), PHP_URL_HOST),
 	'minlength' => 6
 ));
 echo '</div>';
