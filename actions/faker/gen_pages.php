@@ -4,7 +4,7 @@ use Faker\Factory;
 
 set_time_limit(0);
 
-function add_page($owner, $container, $parent = null) {
+function hypefaker_add_page($owner, $container, $parent = null) {
 
 	$locale = elgg_get_plugin_setting('locale', 'hypeFaker', 'en_US');
 	$faker = Factory::create($locale);
@@ -95,18 +95,18 @@ for ($i = 0; $i < $count; $i++) {
 
 		elgg_set_page_owner_guid($container->guid);
 
-		$parent = add_page($owner, $container, null);
+		$parent = hypefaker_add_page($owner, $container, null);
 
 		if ($parent) {
 			$sucess++;
 			$children_count = rand(0, $max_children);
 			if ($children_count) {
 				for ($i = 0; $i < $children_count; $i++) {
-					if ($subparent = add_page($owner, $container, $parent)) {
+					if ($subparent = hypefaker_add_page($owner, $container, $parent)) {
 						$success++;
 						$subparent_children_count = rand(0, $max_children);
 						for ($i = 0; $i < $subparent_children_count; $i++) {
-							if (add_page($owner, $container, $subparent)) {
+							if (hypefaker_add_page($owner, $container, $subparent)) {
 								$success++;
 							}
 						}

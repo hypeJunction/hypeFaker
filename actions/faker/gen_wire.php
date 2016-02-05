@@ -4,7 +4,7 @@ use Faker\Factory;
 
 set_time_limit(0);
 
-function add_wire($owner, $parent = null) {
+function hypefaker_add_wire($owner, $parent = null) {
 
 	$locale = elgg_get_plugin_setting('locale', 'hypeFaker', 'en_US');
 	$faker = Factory::create($locale);
@@ -81,7 +81,7 @@ $users = elgg_get_entities_from_metadata(array(
 		));
 
 foreach ($users as $user) {
-	$wire = add_wire($user);
+	$wire = hypefaker_add_wire($user);
 	if ($wire) {
 		$success++;
 		$replies = rand(1, $max_replies);
@@ -94,7 +94,7 @@ foreach ($users as $user) {
 				'wheres' => array("e.guid != $user->guid")
 			));
 			foreach ($responders as $responder) {
-				if (add_wire($responder, $wire)) {
+				if (hypefaker_add_wire($responder, $wire)) {
 					$success++;
 				}
 			}
