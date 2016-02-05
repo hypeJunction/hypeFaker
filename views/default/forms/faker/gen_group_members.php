@@ -1,7 +1,5 @@
 <?php
 
-namespace hypeJunction\Faker;
-
 echo '<div class="elgg-head">';
 echo elgg_view_title(elgg_echo('faker:gen_group_members'));
 echo '</div>';

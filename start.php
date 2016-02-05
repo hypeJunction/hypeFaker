@@ -9,20 +9,19 @@
  * @author Ismayil Khayredinov <ismayil@hypejunction.com>
  */
 
-namespace hypeJunction\Faker;
-
 const PLUGIN_ID = 'hypeFaker';
 const PLUGIN_ALIAS = 'faker';
 const LOCALE = 'en_US';
 
 require_once __DIR__ . '/autoloader.php';
 
-elgg_register_event_handler('init', 'system', __NAMESPACE__ . '\\init');
+elgg_register_event_handler('init', 'system', 'hypefaker_init');
 
 /**
  * Initialize the plugin
+ * @return void
  */
-function init() {
+function hypefaker_init() {
 
 	elgg_register_action('faker/delete', __DIR__ . '/actions/faker/delete.php', 'admin');
 	elgg_register_action('faker/gen_users', __DIR__ . '/actions/faker/gen_users.php', 'admin');
