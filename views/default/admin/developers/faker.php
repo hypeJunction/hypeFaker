@@ -58,8 +58,8 @@ $content = '<div id="faker-log">' . $fakes . '</div>';
 $delete = elgg_view('output/url', array(
 	'text' => elgg_echo('faker:delete'),
 	'href' => 'action/faker/delete',
-	'is_action' => true,
-	'class' => 'elgg-button elgg-button-action elgg-requires-confirmation',
+	'confirm' => true,
+	'class' => 'elgg-button elgg-button-action',
 		));
 
 echo '<div class="clearfix">';
