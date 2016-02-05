@@ -9,10 +9,6 @@
  * @author Ismayil Khayredinov <ismayil@hypejunction.com>
  */
 
-const PLUGIN_ID = 'hypeFaker';
-const PLUGIN_ALIAS = 'faker';
-const LOCALE = 'en_US';
-
 require_once __DIR__ . '/autoloader.php';
 
 elgg_register_event_handler('init', 'system', 'hypefaker_init');

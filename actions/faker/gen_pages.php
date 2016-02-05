@@ -1,13 +1,13 @@
 <?php
 
 use Faker\Factory;
-use const hypeJunction\Faker\LOCALE;
 
 set_time_limit(0);
 
 function add_page($owner, $container, $parent = null) {
 
-	$faker = Factory::create(LOCALE);
+	$locale = elgg_get_plugin_setting('locale', 'hypeFaker', 'en_US');
+	$faker = Factory::create($locale);
 
 	$access_array = get_write_access_array($owner->guid);
 	$access_id = array_rand($access_array, 1);
@@ -71,7 +71,8 @@ $success = $error = 0;
 $count = (int) get_input('count');
 $max_children = (int) get_input('max_children');
 
-$faker = F\Factory::create(LOCALE);
+$locale = elgg_get_plugin_setting('locale', 'hypeFaker', 'en_US');
+$faker = Factory::create($locale);
 
 for ($i = 0; $i < $count; $i++) {
 

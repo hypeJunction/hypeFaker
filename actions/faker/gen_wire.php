@@ -1,13 +1,13 @@
 <?php
 
 use Faker\Factory;
-use const hypeJunction\Faker\LOCALE;
 
 set_time_limit(0);
 
 function add_wire($owner, $parent = null) {
 
-	$faker = Factory::create(LOCALE);
+	$locale = elgg_get_plugin_setting('locale', 'hypeFaker', 'en_US');
+	$faker = Factory::create($locale);
 
 	$wire = new ElggObject();
 	$wire->subtype = 'thewire';

@@ -1,6 +1,6 @@
 <?php
 
-use const hypeJunction\Faker\LOCALE;
+use Faker\Factory;
 
 set_time_limit(0);
 
@@ -11,7 +11,8 @@ $count = (int) get_input('count');
 $friends_count = (int) rand(1, $count);
 $password = get_input('password');
 
-$faker = F::create(LOCALE);
+$locale = elgg_get_plugin_setting('locale', 'hypeFaker', 'en_US');
+$faker = Factory::create($locale);
 
 for ($i = 0; $i < $count; $i++) {
 
