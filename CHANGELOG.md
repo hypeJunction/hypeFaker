@@ -1,3 +1,13 @@
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/hypeJunction/hypeFaker/compare/2.0.0...v2.0.1) (2016-02-05)
+
+
+### Bug Fixes
+
+* **manifest:** fix versioning in manifest ([6441f39](https://github.com/hypeJunction/hypeFaker/commit/6441f39))
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/hypeJunction/hypeFaker/compare/1.1.0...v2.0.0) (2016-02-05)
 
