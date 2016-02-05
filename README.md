@@ -1,9 +1,8 @@
 hypeFaker
 =========
+![Elgg 2.0](https://img.shields.io/badge/Elgg-2.0.x-orange.svg?style=flat-square)
 
 Populates Elgg sites with demo data for development, testing and preview purposes.
-
-[Buy me a beer!](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=P7QA9CFMENBKA)
 
 ## Scope
 
@@ -22,11 +21,6 @@ Populates Elgg sites with demo data for development, testing and preview purpose
 ## Credits / Acknolwedgements ##
 
 * This plugin depends on the wonderful PHP library by François Zaninotto - https://github.com/fzaninotto/Faker
-
-
-## Git Dev
-
-If grabbing the plugin from Github, install dependencies by running ```composer install```
 
 
 ## Screenshots ##
