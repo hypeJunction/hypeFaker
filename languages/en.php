@@ -63,6 +63,13 @@ $english = array(
 	'faker:gen_messages:count' => 'Number of messages per user to generate',
 	'faker:gen_messages:success' => '%s messages ere successfully created',
 	'faker:gen_messages:error' => '%s messages were successfully created; %s messages could not be created',
+
+	'faker:gen_discussions' => 'Generate discussions',
+	'faker:gen_discussions:count' => 'Number of users to use as basis for generating discussions (discussions will be generated for groups the member belongs to)',
+	'faker:gen_discussions:reply_count' => 'Number of replies per discussion',
+	'faker:gen_discussions:success' => '%s discussions were successfully created',
+	'faker:gen_discussions:error' => '%s discussions were successfully created; %s discussions could not be created',
+
 );
 
 add_translation('en', $english);

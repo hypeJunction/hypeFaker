@@ -49,6 +49,9 @@ if ($fake_user_count) {
 	if (elgg_is_active_plugin('messages')) {
 		$forms .= elgg_view_form('faker/gen_messages');
 	}
+	if (elgg_is_active_plugin('discussions')) {
+		$forms .= elgg_view_form('faker/gen_discussions');
+	}
 }
 
 $fakes = elgg_list_entities_from_metadata(array(

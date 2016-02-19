@@ -30,6 +30,7 @@ function hypefaker_init() {
 	elgg_register_action('faker/gen_pages', __DIR__ . '/actions/faker/gen_pages.php', 'admin');
 	elgg_register_action('faker/gen_wire', __DIR__ . '/actions/faker/gen_wire.php', 'admin');
 	elgg_register_action('faker/gen_messages', __DIR__ . '/actions/faker/gen_messages.php', 'admin');
+	elgg_register_action('faker/gen_discussions', __DIR__ . '/actions/faker/gen_discussions.php', 'admin');
 
 	// Add an admin menu item
 	elgg_register_menu_item('page', array(
