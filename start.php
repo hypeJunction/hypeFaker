@@ -32,6 +32,10 @@ function hypefaker_init() {
 	elgg_register_action('faker/gen_messages', __DIR__ . '/actions/faker/gen_messages.php', 'admin');
 	elgg_register_action('faker/gen_discussions', __DIR__ . '/actions/faker/gen_discussions.php', 'admin');
 
+	if (elgg_is_active_plugin('countries')) {
+		elgg_register_action('faker/gen_location', __DIR__ . '/actions/faker/gen_location.php', 'admin');
+	}
+
 	// Add an admin menu item
 	elgg_register_menu_item('page', array(
 		'name' => 'faker',

@@ -52,6 +52,9 @@ if ($fake_user_count) {
 	if (elgg_is_active_plugin('discussions')) {
 		$forms .= elgg_view_form('faker/gen_discussions');
 	}
+	if (elgg_is_active_plugin('countries')) {
+		$forms .= elgg_view_form('faker/gen_location');
+	}
 }
 
 $fakes = elgg_list_entities_from_metadata(array(

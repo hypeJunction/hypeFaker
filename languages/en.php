@@ -70,6 +70,10 @@ $english = array(
 	'faker:gen_discussions:success' => '%s discussions were successfully created',
 	'faker:gen_discussions:error' => '%s discussions were successfully created; %s discussions could not be created',
 
+	'faker:gen_location' => 'Generate location',
+	'faker:gen_location:real' => 'Generate entity location from real-world country capitals',
+	'faker:gen_location:success' => 'Location has been generated for %s entities',
+	'faker:gen_location:error' => 'Location has been generated for %s of %s entities',
 );
 
 add_translation('en', $english);
