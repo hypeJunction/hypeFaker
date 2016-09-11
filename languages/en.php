@@ -70,6 +70,12 @@ $english = array(
 	'faker:gen_discussions:success' => '%s discussions were successfully created',
 	'faker:gen_discussions:error' => '%s discussions were successfully created; %s discussions could not be created',
 
+	'faker:gen_comments' => 'Generate comments',
+	'faker:gen_comments:count' => 'Number of comments per entity',
+	'faker:gen_comments:reply_count' => 'Number of replies per comment (if nested comments are supported)',
+	'faker:gen_comments:success' => '%s comments were successfully created',
+	'faker:gen_comments:error' => '%s comments were successfully created; %s comments could not be created',
+
 	'faker:gen_location' => 'Generate location',
 	'faker:gen_location:real' => 'Generate entity location from real-world country capitals',
 	'faker:gen_location:success' => 'Location has been generated for %s entities',

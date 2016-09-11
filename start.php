@@ -31,6 +31,7 @@ function hypefaker_init() {
 	elgg_register_action('faker/gen_wire', __DIR__ . '/actions/faker/gen_wire.php', 'admin');
 	elgg_register_action('faker/gen_messages', __DIR__ . '/actions/faker/gen_messages.php', 'admin');
 	elgg_register_action('faker/gen_discussions', __DIR__ . '/actions/faker/gen_discussions.php', 'admin');
+	elgg_register_action('faker/gen_comments', __DIR__ . '/actions/faker/gen_comments.php', 'admin');
 
 	if (elgg_is_active_plugin('countries')) {
 		elgg_register_action('faker/gen_location', __DIR__ . '/actions/faker/gen_location.php', 'admin');
