@@ -20,11 +20,6 @@
 		"php": ">=5.5",
 		"composer/installers": "~1.0",
 		"hypejunction/hypeapps": "*",
-		"fzaninotto/faker": "~1.5"
-	},
-	"autoload": {
-		"psr-0": {
-			"": "classes/"
-		}
+		"fzaninotto/faker": "1.3.*"
 	}
 }
