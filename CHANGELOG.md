@@ -1,3 +1,20 @@
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/hypeJunction/hypeFaker/compare/2.0.1...v2.1.0) (2016-09-11)
+
+
+### Bug Fixes
+
+* **dependencies:** version 1.5 of faker has issues with autoloading, rolling back to 1.3 ([a77e26a](https://github.com/hypeJunction/hypeFaker/commit/a77e26a))
+
+### Features
+
+* **comments:** adds a script to generate fake comments ([c028dbb](https://github.com/hypeJunction/hypeFaker/commit/c028dbb))
+* **generators:** adds discussions and replies generator ([421933d](https://github.com/hypeJunction/hypeFaker/commit/421933d))
+* **generators:** integrates with countries plugin to generate real-world locations ([bffe8c6](https://github.com/hypeJunction/hypeFaker/commit/bffe8c6))
+* **likes:** adds a script to generate likes ([143fb98](https://github.com/hypeJunction/hypeFaker/commit/143fb98))
+
+
+
 <a name="2.0.1"></a>
 ## [2.0.1](https://github.com/hypeJunction/hypeFaker/compare/2.0.0...v2.0.1) (2016-02-05)
 
