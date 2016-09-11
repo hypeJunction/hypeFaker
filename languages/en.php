@@ -76,6 +76,11 @@ $english = array(
 	'faker:gen_comments:success' => '%s comments were successfully created',
 	'faker:gen_comments:error' => '%s comments were successfully created; %s comments could not be created',
 
+	'faker:gen_likes' => 'Generate likes',
+	'faker:gen_likes:count' => 'Max number of likes per entity',
+	'faker:gen_likes:success' => '%s likes were successfully created',
+	'faker:gen_likes:error' => '%s likes were successfully created; %s likes could not be created',
+
 	'faker:gen_location' => 'Generate location',
 	'faker:gen_location:real' => 'Generate entity location from real-world country capitals',
 	'faker:gen_location:success' => 'Location has been generated for %s entities',
