@@ -12,8 +12,6 @@ $reply_count = (int) get_input('reply_count', 0);
 $locale = elgg_get_plugin_setting('locale', 'hypeFaker', 'en_US');
 $faker = Factory::create($locale);
 
-$statuses = array('unsaved_draft', 'draft', 'published');
-
 $entities = new \ElggBatch('elgg_get_entities_from_metadata', [
 	'types' => 'object',
 	'subtypes' => ['blog', 'bookmarks', 'file', 'page', 'page_top'],
@@ -66,9 +64,18 @@ foreach ($entities as $entity) {
 		$comment->description = $faker->text(rand(25, 1000));
 		$comment->access_id = $entity->access_id;
 		$comment->time_created = rand($entity->time_created, time());
+		$comment->__faker = true;
 
 		if ($comment->save()) {
 			$success++;
+
+			elgg_create_river_item(array(
+				'view' => 'river/object/comment/create',
+				'action_type' => 'comment',
+				'subject_guid' => $comment->owner_guid,
+				'object_guid' => $comment->guid,
+				'target_guid' => $entity->guid,
+			));
 
 			for ($k = 0; $k < $reply_count; $k++) {
 				$owner = $users[array_rand($users, 1)];
@@ -81,8 +88,22 @@ foreach ($entities as $entity) {
 					$reply->description = $faker->text(rand(25, 1000));
 					$reply->access_id = $entity->access_id;
 					$reply->time_created = rand($comment->time_created, time());
+					$reply->__faker = true;
 
-					$reply->save() ? $success++ : $error++;
+					if ($reply->save()) {
+						$success++;
+
+						elgg_create_river_item(array(
+							'view' => 'river/object/comment/create',
+							'action_type' => 'comment',
+							'subject_guid' => $reply->owner_guid,
+							'object_guid' => $reply->guid,
+							'target_guid' => $comment->guid,
+						));
+					} else {
+						$error++;
+					}
+					
 				}
 			}
 		} else {
