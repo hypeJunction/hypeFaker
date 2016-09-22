@@ -18,6 +18,8 @@ $english = array(
 	'faker:gen_users:error' => '%s user accounts were created<br />%s accounts failed to create with following messages (%s)',
 
 	'faker:gen_friends' => '(re)Generate friendships and access collections',
+	'faker:gen_friends:reciprocal' => 'Make friendships reciprocal',
+	
 	'faker:gen_friends:max' => 'Max number of friendships per user',
 	'faker:gen_friends:success' => '%s friendship relationships have been generated; %s friend and user collections have been created',
 

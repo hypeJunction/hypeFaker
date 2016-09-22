@@ -4,18 +4,20 @@ set_time_limit(0);
 
 $rels = $collections = 0;
 $max = (int) get_input('max', 20);
+$reciprocal = (bool) get_input('reciprocal');
+
 $friends_count = rand(1, $max);
 
 $users = new ElggBatch('elgg_get_entities_from_metadata', array(
 	'types' => 'user',
 	'metadata_names' => '__faker',
 	'limit' => 0
-		));
+));
 
 $dbprefix = elgg_get_config('dbprefix');
 
 foreach ($users as $user) {
-	
+
 	remove_entity_relationships($user->guid, 'friend');
 
 	$query = "SELECT ag.id FROM {$dbprefix}access_collections ag WHERE ag.owner_guid = $user->guid";
@@ -35,7 +37,7 @@ foreach ($users as $user) {
 
 	$collection_id = create_access_collection('Best Fake Friends Collection', $user->guid);
 	if ($collection_id) {
-		$rand_friends = array_rand($friends, rand(2, $friends_count));
+		$rand_friends = array_rand($friends, min(count($friends), rand(2, $friends_count)));
 		$collections++;
 	}
 
@@ -50,6 +52,16 @@ foreach ($users as $user) {
 			));
 			if ($rand_friends && array_key_exists($friends_key, $rand_friends)) {
 				add_user_to_access_collection($friend->guid, $collection_id);
+			}
+		}
+		if ($reciprocal) {
+			if ($friend->addFriend($user->guid)) {
+				elgg_create_river_item(array(
+					'view' => 'river/relationship/friend/create',
+					'action_type' => 'friend',
+					'subject_guid' => $friend->guid,
+					'object_guid' => $user->guid,
+				));
 			}
 		}
 	}
