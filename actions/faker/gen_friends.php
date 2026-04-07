@@ -6,15 +6,24 @@ $max = (int) get_input('max', 20);
 $reciprocal = (bool) get_input('reciprocal');
 $friends_count = rand(1, $max);
 $users = new ElggBatch('elgg_get_entities', array('types' => 'user', 'metadata_names' => '__faker', 'limit' => 0));
-$dbprefix = elgg_get_config('dbprefix');
 foreach ($users as $user) {
     remove_entity_relationships($user->guid, 'friend');
-    $query = "SELECT ag.id FROM {$dbprefix}access_collections ag WHERE ag.owner_guid = {$user->guid}";
-    $acls = get_data($query);
+    // In Elgg 3.x, use API to manage access collections instead of raw SQL
+    $acls = get_user_access_collections($user->guid);
     foreach ($acls as $col) {
         delete_access_collection($col->id);
     }
-    $friends = elgg_get_entities(array('types' => 'user', 'limit' => $friends_count, 'order_by' => 'RAND()', 'wheres' => array("e.guid != {$user->guid}"), 'metadata_names' => '__faker'));
+    $friends = elgg_get_entities(array(
+        'types' => 'user',
+        'limit' => $friends_count,
+        'order_by' => 'RAND()',
+        'wheres' => [
+            function(\Elgg\Database\QueryBuilder $qb, $alias) use ($user) {
+                return $qb->compare("{$alias}.guid", '!=', $user->guid, ELGG_VALUE_INTEGER);
+            }
+        ],
+        'metadata_names' => '__faker',
+    ));
     $rand_friends = false;
     $collection_id = create_access_collection('Best Fake Friends Collection', $user->guid);
     if ($collection_id) {
@@ -35,7 +44,17 @@ foreach ($users as $user) {
             }
         }
     }
-    $random_acl_members = elgg_get_entities(array('types' => 'user', 'limit' => 10, 'order_by' => 'RAND()', 'wheres' => array("e.guid != {$user->guid}"), 'metadata_names' => '__faker'));
+    $random_acl_members = elgg_get_entities(array(
+        'types' => 'user',
+        'limit' => 10,
+        'order_by' => 'RAND()',
+        'wheres' => [
+            function(\Elgg\Database\QueryBuilder $qb, $alias) use ($user) {
+                return $qb->compare("{$alias}.guid", '!=', $user->guid, ELGG_VALUE_INTEGER);
+            }
+        ],
+        'metadata_names' => '__faker',
+    ));
     if ($random_acl_members) {
         $collection_id = create_access_collection('Fake Arbitrary Collection', $user->guid);
         if ($collection_id) {
@@ -46,5 +65,5 @@ foreach ($users as $user) {
         }
     }
 }
-system_message(elgg_echo('faker:gen_friends:success', array($rels, $collections)));
+elgg_register_success_message(elgg_echo('faker:gen_friends:success', array($rels, $collections)));
 forward(REFERER);

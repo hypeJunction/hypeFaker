@@ -41,7 +41,7 @@ for ($i = 0; $i < $count; $i++) {
 	}
 
 	if (!$guid) {
-		$errors++;
+		$error++;
 		continue;
 	}
 
@@ -67,10 +67,7 @@ if (!empty($users)) {
 		$user->website = $faker->url;
 		$user->twitter = "@" . $username;
 
-		$icon_sizes = elgg_get_config('icon_sizes');
-
-		$files = array();
-		$avatar_error = false;
+		// In Elgg 3.x, save only master icon and let other sizes generate on demand
 		$profile_icon_url = $faker->imageURL();
 
 		$ch = curl_init();
@@ -85,41 +82,14 @@ if (!empty($users)) {
 		$mime_type = $curl_info['content_type'];
 
 		if (substr_count($mime_type, 'image/')) {
-			$filehandler = new ElggFile();
-			$filehandler->owner_guid = $user->guid;
-			$filehandler->setFilename("profile/{$user->guid}__src.jpg");
-			$filehandler->open('write');
-			$filehandler->write($file_contents);
-			$filehandler->close();
+			$tmp = new ElggFile();
+			$tmp->owner_guid = $user->guid;
+			$tmp->setFilename("profile/{$user->guid}__src.jpg");
+			$tmp->open('write');
+			$tmp->write($file_contents);
+			$tmp->close();
 
-			foreach ($icon_sizes as $name => $size_info) {
-				$resized = get_resized_image_from_existing_file($filehandler->getFilenameOnFilestore(), $size_info['w'], $size_info['h'], $size_info['square'], 0, 0, 0, 0, $size_info['upscale']);
-
-				if ($resized) {
-					$file = new ElggFile();
-					$file->owner_guid = $user->guid;
-					$file->setFilename("profile/{$user->guid}{$name}.jpg");
-					$file->open('write');
-					$file->write($resized);
-					$file->close();
-					$files[] = $file;
-				} else {
-					$avatar_error = true;
-				}
-			}
-
-			if ($avatar_error) {
-				foreach ($files as $file) {
-					$file->delete();
-				}
-			} else {
-				$user->x1 = 0;
-				$user->x2 = 0;
-				$user->y1 = 0;
-				$user->y2 = 0;
-
-				$user->icontime = time();
-
+			if ($user->saveIconFromElggFile($tmp, 'icon')) {
 				elgg_create_river_item(array(
 					'view' => 'river/user/default/profileiconupdate',
 					'action_type' => 'update',
@@ -128,25 +98,23 @@ if (!empty($users)) {
 				));
 			}
 
-			$filehandler->delete();
+			$tmp->delete();
 		}
 
-		elgg_set_user_validation_status($user->guid, true, 'FAKER');
+		$user->setValidationStatus(true, 'FAKER');
 
 		if ($user->save()) {
 			$success++;
-			set_user_notification_setting($user->guid, 'email', false);
-			set_user_notification_setting($user->guid, 'site', true);
 		} else {
 			$error++;
 		}
 	}
 }
 
-if ($errors) {
-	system_message(elgg_echo('faker:gen_users:error', array($success, $error, implode('<br />', $exceptions))));
+if ($error) {
+	elgg_register_success_message(elgg_echo('faker:gen_users:error', array($success, $error, implode('<br />', $exceptions))));
 } else {
-	system_message(elgg_echo('faker:gen_users:success', array($success)));
+	elgg_register_success_message(elgg_echo('faker:gen_users:success', array($success)));
 }
 
 forward(REFERER);

@@ -47,7 +47,8 @@ for ($i = 0; $i < $count; $i++) {
                 $reply->owner_guid = $replier->guid;
                 $reply->container_guid = $discussion->guid;
                 $reply->save();
-                elgg_create_river_item(array('view' => 'river/object/discussion_reply/create', 'action_type' => 'reply', 'subject_guid' => $replier->guid, 'object_guid' => $reply->guid, 'target_guid' => $discussion->guid));
+                // In Elgg 3.x, discussion replies are comments
+                elgg_create_river_item(array('view' => 'river/object/comment/create', 'action_type' => 'comment', 'subject_guid' => $replier->guid, 'object_guid' => $reply->guid, 'target_guid' => $discussion->guid));
             }
         } else {
             $error++;
@@ -55,8 +56,8 @@ for ($i = 0; $i < $count; $i++) {
     }
 }
 if ($error) {
-    system_message(elgg_echo('faker:gen_discussions:error', array($success, $error)));
+    elgg_register_success_message(elgg_echo('faker:gen_discussions:error', array($success, $error)));
 } else {
-    system_message(elgg_echo('faker:gen_discussions:success', array($success)));
+    elgg_register_success_message(elgg_echo('faker:gen_discussions:success', array($success)));
 }
 forward(REFERER);

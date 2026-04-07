@@ -39,48 +39,15 @@ for ($i = 0; $i < $count; $i++) {
         curl_close($ch);
         $mime_type = $curl_info['content_type'];
         $file->setMimeType($mime_type);
-        $file->simpletype = file_get_simple_type($mime_type);
+        $file->simpletype = elgg_get_file_simple_type($mime_type);
         $file->open('write');
         $file->write($file_contents);
         $file->close();
         if ($file->save()) {
             $success++;
             if (substr_count($mime_type, 'image/')) {
-                $file->icontime = time();
-                $prefix = "files/";
-                $thumbnail = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), 60, 60, true);
-                if ($thumbnail) {
-                    $thumb = new ElggFile();
-                    $thumb->owner_guid = $file->owner_guid;
-                    $thumb->setFilename($prefix . "thumb" . $file->originalfilename);
-                    $thumb->open("write");
-                    $thumb->write($thumbnail);
-                    $thumb->close();
-                    $file->thumbnail = $prefix . "thumb" . $file->originalfilename;
-                    unset($thumbnail);
-                }
-                $thumbsmall = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), 153, 153, true);
-                if ($thumbsmall) {
-                    $thumb = new ElggFile();
-                    $thumb->owner_guid = $file->owner_guid;
-                    $thumb->setFilename($prefix . "smallthumb" . $file->originalfilename);
-                    $thumb->open("write");
-                    $thumb->write($thumbsmall);
-                    $thumb->close();
-                    $file->smallthumb = $prefix . "smallthumb" . $file->originalfilename;
-                    unset($thumbsmall);
-                }
-                $thumblarge = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), 600, 600, false);
-                if ($thumblarge) {
-                    $thumb = new ElggFile();
-                    $thumb->owner_guid = $file->owner_guid;
-                    $thumb->setFilename($prefix . "largethumb" . $file->originalfilename);
-                    $thumb->open("write");
-                    $thumb->write($thumblarge);
-                    $thumb->close();
-                    $file->largethumb = $prefix . "largethumb" . $file->originalfilename;
-                    unset($thumblarge);
-                }
+                // In Elgg 3.x, use saveIconFromElggFile for on-demand icon generation
+                $file->saveIconFromElggFile($file, 'icon');
             }
             elgg_create_river_item(array('view' => 'river/object/file/create', 'action_type' => 'create', 'subject_guid' => $file->owner_guid, 'object_guid' => $file->guid));
         } else {
@@ -89,8 +56,8 @@ for ($i = 0; $i < $count; $i++) {
     }
 }
 if ($error) {
-    system_message(elgg_echo('faker:gen_files:error', array($success, $error)));
+    elgg_register_success_message(elgg_echo('faker:gen_files:error', array($success, $error)));
 } else {
-    system_message(elgg_echo('faker:gen_files:success', array($success)));
+    elgg_register_success_message(elgg_echo('faker:gen_files:success', array($success)));
 }
 forward(REFERER);

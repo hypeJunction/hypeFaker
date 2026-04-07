@@ -10,8 +10,8 @@ foreach ($data as $d) {
 }
 $fake_count = elgg_get_entities(array('metadata_names' => '__faker', 'count' => true));
 if (!$fake_count) {
-    system_message(elgg_echo('faker:delete:success'));
+    elgg_register_success_message(elgg_echo('faker:delete:success'));
 } else {
-    register_error(elgg_echo('faker:delete:error', $fake_count));
+    elgg_register_error_message(elgg_echo('faker:delete:error', $fake_count));
 }
 access_show_hidden_entities($hidden);

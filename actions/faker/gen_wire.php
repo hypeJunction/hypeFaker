@@ -52,7 +52,17 @@ foreach ($users as $user) {
         $success++;
         $replies = rand(1, $max_replies);
         if ($replies) {
-            $responders = elgg_get_entities(array('types' => 'user', 'limit' => $replies, 'order_by' => 'RAND()', 'metadata_names' => '__faker', 'wheres' => array("e.guid != {$user->guid}")));
+            $responders = elgg_get_entities(array(
+                'types' => 'user',
+                'limit' => $replies,
+                'order_by' => 'RAND()',
+                'metadata_names' => '__faker',
+                'wheres' => [
+                    function(\Elgg\Database\QueryBuilder $qb, $alias) use ($user) {
+                        return $qb->compare("{$alias}.guid", '!=', $user->guid, ELGG_VALUE_INTEGER);
+                    }
+                ],
+            ));
             foreach ($responders as $responder) {
                 if (hypefaker_add_wire($responder, $wire)) {
                     $success++;
@@ -62,8 +72,8 @@ foreach ($users as $user) {
     }
 }
 if ($error) {
-    system_message(elgg_echo('faker:gen_wire:error', array($success, $error)));
+    elgg_register_success_message(elgg_echo('faker:gen_wire:error', array($success, $error)));
 } else {
-    system_message(elgg_echo('faker:gen_wire:success', array($success)));
+    elgg_register_success_message(elgg_echo('faker:gen_wire:success', array($success)));
 }
 forward(REFERER);

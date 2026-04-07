@@ -5,16 +5,21 @@ if (!elgg_is_active_plugin('countries')) {
 }
 set_time_limit(0);
 $success = $error = 0;
-$exclude = array('messages', 'plugin', 'widget', 'site_notification');
-foreach ($exclude as $k => $e) {
-    $exclude[$k] = get_subtype_id('object', $e);
-}
-$exclude_ids = implode(',', array_filter($exclude));
-$location_md = null;
-$lat_md = null;
-$long_md = null;
-$dbprefix = elgg_get_config('dbprefix');
-$entities = new ElggBatch('elgg_get_entities', array('limit' => 0, 'wheres' => array($exclude_ids ? "e.subtype NOT IN ({$exclude_ids})" : null, "NOT EXISTS (SELECT 1 FROM {$dbprefix}metadata WHERE entity_guid = e.guid AND name_id = {$location_md})")));
+// In Elgg 3.x, subtypes are stored as strings, no need for get_subtype_id()
+$exclude_subtypes = array('messages', 'plugin', 'widget', 'site_notification');
+$entities = new ElggBatch('elgg_get_entities', array(
+    'limit' => 0,
+    'wheres' => [
+        function(\Elgg\Database\QueryBuilder $qb, $alias) use ($exclude_subtypes) {
+            $wheres = [];
+            $wheres[] = $qb->compare("{$alias}.subtype", 'NOT IN', $exclude_subtypes, ELGG_VALUE_STRING);
+            // Exclude entities that already have a location
+            $md = $qb->joinMetadataTable($alias, 'guid', 'location', 'left');
+            $wheres[] = $qb->compare("{$md}.value", 'IS NULL');
+            return $qb->merge($wheres);
+        }
+    ],
+));
 $countries = elgg_get_country_info(array('name', 'capital'));
 foreach ($entities as $entity) {
     $country = $countries[array_rand($countries, 1)];
@@ -26,8 +31,8 @@ foreach ($entities as $entity) {
     }
 }
 if ($error) {
-    system_message(elgg_echo('faker:gen_location:error', array($success, $error)));
+    elgg_register_success_message(elgg_echo('faker:gen_location:error', array($success, $error)));
 } else {
-    system_message(elgg_echo('faker:gen_location:success', array($success)));
+    elgg_register_success_message(elgg_echo('faker:gen_location:success', array($success)));
 }
 forward(REFERER);

@@ -37,8 +37,8 @@ for ($i = 0; $i < $count; $i++) {
     }
 }
 if ($error) {
-    system_message(elgg_echo('faker:gen_bookmarks:error', array($success, $error)));
+    elgg_register_success_message(elgg_echo('faker:gen_bookmarks:error', array($success, $error)));
 } else {
-    system_message(elgg_echo('faker:gen_bookmarks:success', array($success)));
+    elgg_register_success_message(elgg_echo('faker:gen_bookmarks:success', array($success)));
 }
 forward(REFERER);

@@ -18,7 +18,9 @@ for ($i = 0; $i < $count; $i++) {
     foreach ($containers as $container) {
         elgg_set_page_owner_guid($container->guid);
         $access_array = get_write_access_array($owner->guid);
-        $blog = new ElggBlog();
+        // ElggBlog class was removed in 3.x, use ElggObject with subtype 'blog'
+        $blog = new ElggObject();
+        $blog->subtype = 'blog';
         $blog->owner_guid = $owner->guid;
         $blog->container_guid = $container->guid;
         $blog->status = $statuses[array_rand($statuses, 1)];
@@ -33,7 +35,6 @@ for ($i = 0; $i < $count; $i++) {
         $blog->description = $faker->text(500);
         $blog->excerpt = $faker->sentence(12);
         $blog->tags = $faker->words(5);
-        //$blog->new_post = TRUE;
         $blog->__faker = true;
         if ($blog->save()) {
             $success++;
@@ -54,8 +55,8 @@ for ($i = 0; $i < $count; $i++) {
     }
 }
 if ($error) {
-    system_message(elgg_echo('faker:gen_blogs:error', array($success, $error)));
+    elgg_register_success_message(elgg_echo('faker:gen_blogs:error', array($success, $error)));
 } else {
-    system_message(elgg_echo('faker:gen_blogs:success', array($success)));
+    elgg_register_success_message(elgg_echo('faker:gen_blogs:success', array($success)));
 }
 forward(REFERER);

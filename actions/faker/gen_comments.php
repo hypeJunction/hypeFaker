@@ -60,8 +60,8 @@ foreach ($entities as $entity) {
     }
 }
 if ($error) {
-    system_message(elgg_echo('faker:gen_comments:error', array($success, $error)));
+    elgg_register_success_message(elgg_echo('faker:gen_comments:error', array($success, $error)));
 } else {
-    system_message(elgg_echo('faker:gen_comments:success', array($success)));
+    elgg_register_success_message(elgg_echo('faker:gen_comments:success', array($success)));
 }
 forward(REFERER);

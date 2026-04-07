@@ -5,19 +5,9 @@ function hypefaker_get_group_content_access_mode($mode)
 {
     switch ($mode) {
         case 'members_only':
-            if (is_callable('ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY')) {
-                return ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY;
-            } else {
-                return 'members_only';
-            }
-            break;
+            return ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY;
         case 'unrestricted':
-            if (is_callable('ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED')) {
-                return ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
-            } else {
-                return 'unrestricted';
-            }
-            break;
+            return ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
     }
 }
 set_time_limit(0);
@@ -44,7 +34,7 @@ foreach (array(ACCESS_PRIVATE, ACCESS_LOGGED_IN, ACCESS_PUBLIC) as $visibility) 
                 $group->content_access_mode = $content_access_mode;
                 $guid = $group->save();
                 if (!$guid) {
-                    $errors++;
+                    $error++;
                     continue;
                 }
                 if ($visibility != ACCESS_PUBLIC && $visibility != ACCESS_LOGGED_IN) {
@@ -56,8 +46,8 @@ foreach (array(ACCESS_PRIVATE, ACCESS_LOGGED_IN, ACCESS_PUBLIC) as $visibility) 
                 $group->__faker = true;
                 // store this flag so we can easily find fake entities
                 $group->join($owner);
-                $icon_sizes = elgg_get_config('icon_sizes');
-                $files = array();
+
+                // In Elgg 3.x, use saveIconFromElggFile for on-demand icon generation
                 $profile_icon_url = $faker->imageURL();
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, $profile_icon_url);
@@ -69,36 +59,17 @@ foreach (array(ACCESS_PRIVATE, ACCESS_LOGGED_IN, ACCESS_PUBLIC) as $visibility) 
                 curl_close($ch);
                 $mime_type = $curl_info['content_type'];
                 if (substr_count($mime_type, 'image/')) {
-                    $prefix = "groups/{$group->guid}";
-                    $filehandler = new ElggFile();
-                    $filehandler->owner_guid = $group->owner_guid;
-                    $filehandler->setFilename("{$prefix}.jpg");
-                    $filehandler->open('write');
-                    $filehandler->write($file_contents);
-                    $filehandler->close();
-                    foreach ($icon_sizes as $name => $size_info) {
-                        $resized = get_resized_image_from_existing_file($filehandler->getFilenameOnFilestore(), $size_info['w'], $size_info['h'], $size_info['square'], 0, 0, 0, 0, $size_info['upscale']);
-                        if ($resized) {
-                            $file = new ElggFile();
-                            $file->owner_guid = $group->owner_guid;
-                            $file->setFilename("{$prefix}{$name}.jpg");
-                            $file->open('write');
-                            $file->write($resized);
-                            $file->close();
-                            $files[] = $file;
-                        } else {
-                            $avatar_error = true;
-                        }
-                    }
-                    if (!empty($avatar_error)) {
-                        foreach ($files as $file) {
-                            $file->delete();
-                            $filehandler->delete();
-                        }
-                    } else {
-                        $group->icontime = time();
-                    }
+                    $tmp = new ElggFile();
+                    $tmp->owner_guid = $group->owner_guid;
+                    $tmp->setFilename("groups/{$group->guid}_src.jpg");
+                    $tmp->open('write');
+                    $tmp->write($file_contents);
+                    $tmp->close();
+
+                    $group->saveIconFromElggFile($tmp, 'icon');
+                    $tmp->delete();
                 }
+
                 elgg_create_river_item(array('view' => 'river/group/create', 'action_type' => 'create', 'subject_guid' => $owner->guid, 'object_guid' => $group->guid));
                 $tool_options = elgg_get_config('group_tool_options');
                 if ($tool_options) {
@@ -118,8 +89,11 @@ foreach (array(ACCESS_PRIVATE, ACCESS_LOGGED_IN, ACCESS_PUBLIC) as $visibility) 
         }
     }
 }
-if (!empty($groups)) {
-    $featured_group_keys = array_rand($groups, $featured_count);
+if (!empty($groups) && $featured_count > 0) {
+    $featured_group_keys = array_rand($groups, min($featured_count, count($groups)));
+    if (!is_array($featured_group_keys)) {
+        $featured_group_keys = [$featured_group_keys];
+    }
     foreach ($groups as $key => $group) {
         if (in_array($key, $featured_group_keys)) {
             $group->featured_group = "yes";
@@ -127,8 +101,8 @@ if (!empty($groups)) {
     }
 }
 if ($error) {
-    system_message(elgg_echo('faker:gen_groups:error', array($success, $error)));
+    elgg_register_success_message(elgg_echo('faker:gen_groups:error', array($success, $error)));
 } else {
-    system_message(elgg_echo('faker:gen_groups:success', array($success)));
+    elgg_register_success_message(elgg_echo('faker:gen_groups:success', array($success)));
 }
 forward(REFERER);

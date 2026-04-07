@@ -78,8 +78,8 @@ foreach ($senders as $sender) {
     }
 }
 if ($error) {
-    system_message(elgg_echo('faker:gen_messages:error', array($success, $error)));
+    elgg_register_success_message(elgg_echo('faker:gen_messages:error', array($success, $error)));
 } else {
-    system_message(elgg_echo('faker:gen_messages:success', array($success)));
+    elgg_register_success_message(elgg_echo('faker:gen_messages:success', array($success)));
 }
 forward(REFERER);

@@ -79,8 +79,8 @@ for ($i = 0; $i < $count; $i++) {
     }
 }
 if ($error) {
-    system_message(elgg_echo('faker:gen_pages:error', array($success, $error)));
+    elgg_register_success_message(elgg_echo('faker:gen_pages:error', array($success, $error)));
 } else {
-    system_message(elgg_echo('faker:gen_pages:success', array($success)));
+    elgg_register_success_message(elgg_echo('faker:gen_pages:success', array($success)));
 }
 forward(REFERER);

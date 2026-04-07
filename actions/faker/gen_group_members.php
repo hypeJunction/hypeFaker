@@ -38,5 +38,5 @@ foreach ($groups as $group) {
         }
     }
 }
-system_message(elgg_echo('faker:gen_group_members:success', array($rel_member, $rel_invited, $rel_membership_request, sizeof($groups))));
+elgg_register_success_message(elgg_echo('faker:gen_group_members:success', array($rel_member, $rel_invited, $rel_membership_request, sizeof($groups))));
 forward(REFERER);

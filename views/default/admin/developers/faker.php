@@ -3,7 +3,7 @@
 /**
  * UI for generating fake data
  */
-elgg_load_js('admin.faker');
+elgg_require_js('admin.faker');
 $forms = elgg_view_form('faker/gen_users');
 $fake_user_count = elgg_get_entities(array('types' => 'user', 'metadata_names' => '__faker', 'count' => true));
 if ($fake_user_count) {

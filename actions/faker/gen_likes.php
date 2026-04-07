@@ -18,19 +18,27 @@ foreach ($entities as $entity) {
     }
     $users[] = $entity->getOwnerEntity();
     foreach ($users as $user) {
-        if (elgg_annotation_exists($entity->guid, 'likes')) {
+        // Check if this user already liked this entity
+        $existing = elgg_get_annotations([
+            'guid' => $entity->guid,
+            'annotation_name' => 'likes',
+            'annotation_owner_guid' => $user->guid,
+            'count' => true,
+        ]);
+        if ($existing) {
             continue;
         }
         if (!$entity->canAnnotate($user->guid, 'likes')) {
             continue;
         }
-        $annotation_id = create_annotation($entity->guid, 'likes', "likes", "", $user->guid, $entity->access_id);
+        // In Elgg 3.x, use $entity->annotate() instead of procedural create_annotation()
+        $annotation_id = $entity->annotate('likes', "likes", $entity->access_id, $user->guid);
         $annotation_id ? $success++ : $error++;
     }
 }
 if ($error) {
-    system_message(elgg_echo('faker:gen_likes:error', array($success, $error)));
+    elgg_register_success_message(elgg_echo('faker:gen_likes:error', array($success, $error)));
 } else {
-    system_message(elgg_echo('faker:gen_likes:success', array($success)));
+    elgg_register_success_message(elgg_echo('faker:gen_likes:success', array($success)));
 }
 forward(REFERER);
