@@ -8,7 +8,10 @@ foreach ($groups as $group) {
     remove_entity_relationships($group->guid, 'member', true);
     remove_entity_relationships($group->guid, 'membership_request', true);
     remove_entity_relationships($group->guid, 'invited');
-    update_access_collection($group->group_acl, array($group->owner_guid));
+    $acl = $group->getOwnedAccessCollection('group_acl');
+    if ($acl) {
+        update_access_collection($acl->id, array($group->owner_guid));
+    }
     $group->join(get_entity($group->owner_guid));
     $members_count = rand(1, $member_count_max);
     $members = elgg_get_entities(array('types' => 'user', 'limit' => $members_count, 'order_by' => 'RAND()', 'metadata_names' => '__faker'));

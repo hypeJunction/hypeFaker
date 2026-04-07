@@ -38,7 +38,7 @@ foreach (array(ACCESS_PRIVATE, ACCESS_LOGGED_IN, ACCESS_PUBLIC) as $visibility) 
                     continue;
                 }
                 if ($visibility != ACCESS_PUBLIC && $visibility != ACCESS_LOGGED_IN) {
-                    $visibility = $group->group_acl;
+                    $visibility = $group->getOwnedAccessCollection('group_acl')->id;
                 }
                 if ($group->access_id != $visibility) {
                     $group->access_id = $visibility;
