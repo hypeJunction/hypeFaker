@@ -14,7 +14,7 @@ set_time_limit(0);
 $success = $error = 0;
 $count = (int) get_input('count');
 $featured_count = (int) get_input('featured_count');
-$locale = elgg_get_plugin_setting('locale', 'hypeFaker', 'en_US');
+$locale = elgg_get_plugin_setting('locale', 'hypefaker', 'en_US');
 $faker = Factory::create($locale);
 foreach (array(ACCESS_PRIVATE, ACCESS_LOGGED_IN, ACCESS_PUBLIC) as $visibility) {
     foreach (array(hypefaker_get_group_content_access_mode('members_only'), hypefaker_get_group_content_access_mode('unrestricted')) as $content_access_mode) {

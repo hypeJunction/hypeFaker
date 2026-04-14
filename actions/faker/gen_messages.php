@@ -4,7 +4,7 @@ use Faker\Factory;
 set_time_limit(0);
 $success = $error = 0;
 $count = (int) get_input('count');
-$locale = elgg_get_plugin_setting('locale', 'hypeFaker', 'en_US');
+$locale = elgg_get_plugin_setting('locale', 'hypefaker', 'en_US');
 $faker = Factory::create($locale);
 global $messagesendflag;
 $messagesendflag = 1;

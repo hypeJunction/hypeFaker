@@ -12,7 +12,7 @@ $friends_count = (int) rand(1, $count);
 $password = get_input('password');
 $domain = get_input('email_domain');
 
-$locale = elgg_get_plugin_setting('locale', 'hypeFaker', 'en_US');
+$locale = elgg_get_plugin_setting('locale', 'hypefaker', 'en_US');
 $faker = Factory::create($locale);
 
 for ($i = 0; $i < $count; $i++) {

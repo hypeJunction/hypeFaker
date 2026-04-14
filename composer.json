@@ -14,13 +14,12 @@
 		}
 	],
 	"extra": {
-		"installer-name": "hypeFaker"
+		"installer-name": "hypefaker"
 	},
 	"require": {
-		"php": ">=5.5",
-		"composer/installers": "~1.0",
-		"hypejunction/hypeapps": "*",
-		"fzaninotto/faker": "1.3.*"
+		"php": ">=7.4",
+		"composer/installers": "^1.0 || ^2.0",
+		"fakerphp/faker": "^1.23"
 	},
 	"config": {
 		"allow-plugins": {

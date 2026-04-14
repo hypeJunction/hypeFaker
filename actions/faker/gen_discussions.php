@@ -5,7 +5,7 @@ set_time_limit(0);
 $success = $error = 0;
 $count = (int) get_input('count');
 $reply_count = (int) get_input('reply_count', 5);
-$locale = elgg_get_plugin_setting('locale', 'hypeFaker', 'en_US');
+$locale = elgg_get_plugin_setting('locale', 'hypefaker', 'en_US');
 $faker = Factory::create($locale);
 $statuses = array('open', 'closed');
 for ($i = 0; $i < $count; $i++) {
