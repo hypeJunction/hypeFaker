@@ -4,7 +4,10 @@
 	"description": "Generate fake data for your Elgg site",
 	"homepage": "http://hypejunction.com",
 	"keywords": [
-		"elgg", "plugin", "demo", "lorem ipsum"
+		"elgg",
+		"plugin",
+		"demo",
+		"lorem ipsum"
 	],
 	"license": "GPL-2.0",
 	"authors": [
@@ -14,12 +17,16 @@
 		}
 	],
 	"extra": {
-		"installer-name": "hypefaker"
+		"installer-name": "hypefaker",
+		"elgg-plugin": {
+			"id": "hypefaker"
+		}
 	},
 	"require": {
 		"php": ">=7.4",
-		"composer/installers": "^1.0 || ^2.0",
-		"fakerphp/faker": "^1.23"
+		"composer/installers": "^2.0",
+		"fakerphp/faker": "^1.23",
+		"elgg/elgg": "^4.0"
 	},
 	"config": {
 		"allow-plugins": {
