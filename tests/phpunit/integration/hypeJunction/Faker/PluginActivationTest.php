@@ -31,8 +31,8 @@ class PluginActivationTest extends IntegrationTestCase
 
     public function testInitCallbackRegistered(): void
     {
-        // hypefaker_init is wired via elgg_register_event_handler in start.php.
-        $this->assertTrue(function_exists('hypefaker_init') || is_callable('hypefaker_init'));
+        // Plugin uses Bootstrap class; no procedural init function in Elgg 4.x.
+        $this->assertTrue(class_exists(\hypeJunction\Faker\Bootstrap::class));
     }
 
     public function testAdminMenuItemRegistered(): void

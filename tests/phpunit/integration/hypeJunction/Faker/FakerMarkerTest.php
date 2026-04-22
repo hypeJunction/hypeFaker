@@ -37,7 +37,10 @@ class FakerMarkerTest extends IntegrationTestCase
         $obj->title = 'Fake blog';
         $obj->description = 'lorem ipsum';
         $obj->__faker = true;
+
+        elgg_get_session()->setLoggedInUser($user);
         $this->assertNotFalse($obj->save());
+        elgg_get_session()->removeLoggedInUser();
 
         _elgg_services()->entityCache->delete($obj->guid);
         $loaded = get_entity($obj->guid);
@@ -55,7 +58,10 @@ class FakerMarkerTest extends IntegrationTestCase
         $obj->access_id = ACCESS_PUBLIC;
         $obj->title = 'Fake blog for search';
         $obj->__faker = true;
+
+        elgg_get_session()->setLoggedInUser($user);
         $obj->save();
+        elgg_get_session()->removeLoggedInUser();
 
         $found = elgg_get_entities([
             'types' => 'object',
@@ -85,7 +91,10 @@ class FakerMarkerTest extends IntegrationTestCase
         $obj->access_id = ACCESS_PUBLIC;
         $obj->title = 'counted';
         $obj->__faker = true;
+
+        elgg_get_session()->setLoggedInUser($user);
         $obj->save();
+        elgg_get_session()->removeLoggedInUser();
 
         $after = elgg_get_entities([
             'metadata_names' => '__faker',
@@ -101,7 +110,10 @@ class FakerMarkerTest extends IntegrationTestCase
         // gen_users sets __faker on user entities so they can be swept.
         $user = $this->createUser();
         $user->__faker = true;
+
+        elgg_get_session()->setLoggedInUser($user);
         $this->assertNotFalse($user->save());
+        elgg_get_session()->removeLoggedInUser();
 
         $found = elgg_get_entities([
             'types' => 'user',
