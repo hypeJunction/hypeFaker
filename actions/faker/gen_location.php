@@ -1,7 +1,7 @@
 <?php
 
 if (!elgg_is_active_plugin('countries')) {
-    forward(REFERRER);
+    return elgg_redirect_response(REFERRER);
 }
 set_time_limit(0);
 $success = $error = 0;
@@ -24,9 +24,9 @@ $countries = elgg_get_country_info(array('name', 'capital'));
 foreach ($entities as $entity) {
     $country = $countries[array_rand($countries, 1)];
     $location = "{$country['capital']}, {$country['name']}";
-    $entity->setLocation($location);
+    $entity->location = $location;
     if ($entity->save()) {
-        error_log("New location for {$entity->guid}: {$entity->getLocation()}");
+        error_log("New location for {$entity->guid}: {$entity->location}");
         $success++;
     }
 }
@@ -35,4 +35,4 @@ if ($error) {
 } else {
     elgg_register_success_message(elgg_echo('faker:gen_location:success', array($success)));
 }
-forward(REFERER);
+return elgg_redirect_response(REFERRER);

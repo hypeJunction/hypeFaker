@@ -42,4 +42,4 @@ foreach ($groups as $group) {
     }
 }
 elgg_register_success_message(elgg_echo('faker:gen_group_members:success', array($rel_member, $rel_invited, $rel_membership_request, sizeof($groups))));
-forward(REFERER);
+return elgg_redirect_response(REFERRER);

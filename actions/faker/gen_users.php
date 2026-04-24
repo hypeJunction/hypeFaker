@@ -18,7 +18,7 @@ $faker = Factory::create($locale);
 for ($i = 0; $i < $count; $i++) {
 
 	if (!$password) {
-		$password = generate_random_cleartext_password();
+		$password = elgg_generate_password();
 	}
 
 	$name = $faker->name;
@@ -34,21 +34,25 @@ for ($i = 0; $i < $count; $i++) {
 		$email = "{$username}@{$faker->safeEmailDomain}";
 	}
 
+	$user = null;
 	try {
-		$guid = register_user($username, $password, $name, $email);
+		$user = elgg_register_user([
+			'username' => $username,
+			'password' => $password,
+			'name' => $name,
+			'email' => $email,
+		]);
 	} catch (Exception $e) {
 		$exceptions[] = $e;
 	}
 
-	if (!$guid) {
+	if (!$user instanceof ElggUser) {
 		$error++;
 		continue;
 	}
 
-	$user = get_entity($guid);
-	$user->__faker = true; // store this flag so we can easily find fake users
-
-	$users[$guid] = $user;
+	$user->__faker = true;
+	$users[$user->guid] = $user;
 }
 
 if (!empty($users)) {
@@ -57,7 +61,7 @@ if (!empty($users)) {
 
 		$user->description = $faker->text(200);
 		$user->briefdescription = $faker->catchPhrase;
-		$user->setLocation(implode(', ', array($faker->city, $faker->country)));
+		$user->location = implode(', ', array($faker->city, $faker->country));
 		$user->setLatLong($faker->latitude, $faker->longitude);
 		$user->interests = $faker->words(rand(1, 10));
 		$user->skills = $faker->words(rand(1, 10));
@@ -117,4 +121,4 @@ if ($error) {
 	elgg_register_success_message(elgg_echo('faker:gen_users:success', array($success)));
 }
 
-forward(REFERER);
+return elgg_redirect_response(REFERRER);

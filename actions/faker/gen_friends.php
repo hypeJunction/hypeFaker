@@ -66,4 +66,4 @@ foreach ($users as $user) {
     }
 }
 elgg_register_success_message(elgg_echo('faker:gen_friends:success', array($rels, $collections)));
-forward(REFERER);
+return elgg_redirect_response(REFERRER);

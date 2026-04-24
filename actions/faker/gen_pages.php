@@ -83,4 +83,4 @@ if ($error) {
 } else {
     elgg_register_success_message(elgg_echo('faker:gen_pages:success', array($success)));
 }
-forward(REFERER);
+return elgg_redirect_response(REFERRER);
