@@ -66,7 +66,7 @@ class DeleteSweepTest extends IntegrationTestCase
         $keeper = $admins[0];
         $this->assertInstanceOf(\ElggUser::class, $keeper, 'admin user not found');
 
-        elgg_get_session()->setLoggedInUser($keeper);
+        _elgg_services()->session_manager->setLoggedInUser($keeper);
         $victim = new ElggObject();
         $victim->setSubtype('blog');
         $victim->owner_guid = $keeper->guid;
@@ -75,7 +75,7 @@ class DeleteSweepTest extends IntegrationTestCase
         $victim->title = 'fake';
         $victim->__faker = true;
         $victim->save();
-        elgg_get_session()->removeLoggedInUser();
+        _elgg_services()->session_manager->removeLoggedInUser();
 
         elgg_call(ELGG_SHOW_DISABLED_ENTITIES | ELGG_IGNORE_ACCESS, function () {
             $batch = new \ElggBatch('elgg_get_entities', [
@@ -92,7 +92,7 @@ class DeleteSweepTest extends IntegrationTestCase
             // Keeper (no __faker) must survive.
             $this->assertInstanceOf(\ElggUser::class, get_entity($keeper->guid));
             // Victim gone.
-            $this->assertFalse(get_entity($victim->guid));
+            $this->assertNull(get_entity($victim->guid));
         });
     }
 }
