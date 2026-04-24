@@ -22,12 +22,31 @@
 			"id": "hypefaker"
 		}
 	},
+	"autoload": {
+		"psr-4": {
+			"hypeJunction\\Faker\\": "classes/hypeJunction/Faker/"
+		}
+	},
 	"require": {
 		"php": ">=8.2",
 		"composer/installers": "^2.0",
 		"fakerphp/faker": "^1.23",
-		"elgg/elgg": "^5.0"
+		"elgg/elgg": "~5.1.0"
 	},
+	"conflict": {
+		"elgg/elgg": "<5.0"
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"replace": {
+		"roave/security-advisories": "dev-master"
+	},
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://asset-packagist.org"
+		}
+	],
 	"config": {
 		"allow-plugins": {
 			"composer/installers": true
