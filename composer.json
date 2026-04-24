@@ -23,10 +23,10 @@
 		}
 	},
 	"require": {
-		"php": ">=7.4",
+		"php": ">=8.2",
 		"composer/installers": "^2.0",
 		"fakerphp/faker": "^1.23",
-		"elgg/elgg": "^4.0"
+		"elgg/elgg": "^5.0"
 	},
 	"config": {
 		"allow-plugins": {

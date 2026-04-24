@@ -37,7 +37,7 @@ function hypefaker_add_wire($owner, $parent = null)
         }
         elgg_create_river_item(array('view' => 'river/object/thewire/create', 'action_type' => 'create', 'subject_guid' => $wire->owner_guid, 'object_guid' => $wire->guid));
         $params = array('entity' => $wire, 'user' => $owner, 'message' => $wire->description, 'url' => $wire->getURL(), 'origin' => 'thewire');
-        elgg_trigger_plugin_hook('status', 'user', $params);
+        elgg_trigger_event_results('status', 'user', $params);
         return $wire;
     }
     return false;

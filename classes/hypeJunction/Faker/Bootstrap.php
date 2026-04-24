@@ -3,17 +3,16 @@
 namespace hypeJunction\Faker;
 
 use Elgg\DefaultPluginBootstrap;
-use Elgg\Hook;
+use Elgg\Event;
 
 class Bootstrap extends DefaultPluginBootstrap {
 
 	public function init() {
-		// Register the faker page menu item via a declarative hook.
-		elgg_register_plugin_hook_handler('register', 'menu:page', [self::class, 'setupPageMenu']);
+		elgg_register_event_handler('register', 'menu:page', [self::class, 'setupPageMenu']);
 	}
 
-	public static function setupPageMenu(Hook $hook) {
-		$return = $hook->getValue();
+	public static function setupPageMenu(Event $event) {
+		$return = $event->getValue();
 		if (elgg_get_context() !== 'admin') {
 			return $return;
 		}
