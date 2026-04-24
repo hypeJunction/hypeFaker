@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# Per-plugin Elgg 4.x install + activation script.
+# Per-plugin Elgg 5.x install + activation script.
 # PLUGIN_ID must be set in the container environment (passed by docker-compose
 # from <plugin>/docker/.env). Only that one plugin is activated — no fleet
 # activation, no plugin-order.txt, no cross-plugin side effects.
@@ -21,7 +21,7 @@ echo "MySQL is ready."
 cd /var/www/html
 
 if [ ! -f /var/www/html/.elgg-installed ]; then
-    echo "Installing Elgg 4.x..."
+    echo "Installing Elgg 5.x..."
 
     mkdir -p elgg-config
     cat > elgg-config/settings.php <<'SETTINGS_TEMPLATE'
@@ -56,7 +56,7 @@ SETTINGS_VALUES
             'dbhost' => '${ELGG_DB_HOST:-db}',
             'dbport' => '3306',
             'dbprefix' => 'elgg_',
-            'sitename' => 'Elgg 4.x Plugin Test',
+            'sitename' => 'Elgg 5.x Plugin Test',
             'siteemail' => '${ELGG_ADMIN_EMAIL:-admin@example.com}',
             'wwwroot' => '${ELGG_SITE_URL:-http://localhost:8480/}',
             'dataroot' => '${ELGG_DATA_ROOT:-/var/www/data/}',
@@ -68,10 +68,24 @@ SETTINGS_VALUES
 
         \$installer = new \ElggInstaller();
         \$installer->batchInstall(\$params);
-        echo 'Elgg 4.x installed successfully.' . PHP_EOL;
+        echo 'Elgg 5.x installed successfully.' . PHP_EOL;
     " 2>&1 || echo "Install completed (check for errors above)."
 
+    # Install plugin-local composer deps (e.g. fakerphp/faker)
+    if [ -f "/var/www/html/mod/${PLUGIN_ID}/composer.json" ] && [ ! -d "/var/www/html/mod/${PLUGIN_ID}/vendor" ]; then
+        echo "Installing plugin composer deps for ${PLUGIN_ID}..."
+        (cd "/var/www/html/mod/${PLUGIN_ID}" && composer install --no-interaction --prefer-dist --no-dev 2>&1 | tail -10) || echo "Plugin composer install completed (check for errors above)."
+    fi
+
     echo "Activating plugins..."
+
+    # Symlink core plugins needed for tests into mod/ so Elgg can discover them.
+    for CORE_PLUGIN in activity blog bookmarks file thewire messages groups pages; do
+        if [ ! -e "/var/www/html/mod/${CORE_PLUGIN}" ]; then
+            ln -sf "/var/www/html/vendor/elgg/elgg/mod/${CORE_PLUGIN}" "/var/www/html/mod/${CORE_PLUGIN}"
+        fi
+    done
+
     php -r "
         require_once 'vendor/autoload.php';
         \$app = \Elgg\Application::getInstance();
@@ -139,10 +153,37 @@ SETTINGS_VALUES
                 exit(1);
             }
         }
+
+        // Activate core plugins needed for E2E tests (not dep of ${PLUGIN_ID}).
+        foreach (['activity', 'blog', 'bookmarks', 'file', 'thewire', 'messages', 'groups', 'pages'] as \$core_id) {
+            \$core = elgg_get_plugin_from_id(\$core_id);
+            if (!\$core) {
+                echo 'WARNING: core plugin ' . \$core_id . ' not found — skipping.' . PHP_EOL;
+                continue;
+            }
+            if (\$core->isActive()) {
+                echo 'Core plugin ' . \$core_id . ' already active.' . PHP_EOL;
+            } else {
+                try {
+                    \$core->activate();
+                    echo 'Core plugin ' . \$core_id . ' activated.' . PHP_EOL;
+                } catch (\Throwable \$e) {
+                    echo 'WARNING: failed to activate core plugin ' . \$core_id . ': ' . \$e->getMessage() . PHP_EOL;
+                }
+            }
+        }
+
+        // elgg_invalidate_caches() (called inside activate()) is a no-op for the
+        // localFileCache-backed serverCache where view_locations is stored.
+        // elgg_clear_caches() properly wipes localFileCache so the next web request
+        // rescans all active plugin views and rebuilds view_locations including them.
+        elgg_clear_caches();
+        echo 'Caches cleared after plugin activation.' . PHP_EOL;
     " 2>&1 || echo "Plugin activation completed (check for errors above)."
 
+    chown -R www-data:www-data /var/www/data
     touch /var/www/html/.elgg-installed
-    echo "Elgg 4.x setup complete."
+    echo "Elgg 5.x setup complete."
 fi
 
 echo "Starting Apache..."
