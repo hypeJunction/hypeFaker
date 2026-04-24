@@ -12,13 +12,13 @@ const DB_CONFIG = {
 export async function loginAs(
   page: Page,
   username: string,
-  password: string = 'testpass123'
+  password: string = 'admin12345'
 ) {
   await page.goto('/login');
-  await page.fill('input[name="username"]', username);
-  await page.fill('input[name="password"]', password);
-  await page.click('input[type="submit"], button[type="submit"]');
-  await page.waitForLoadState('networkidle');
+  await page.fill('.elgg-module-aside input[name="username"]', username);
+  await page.fill('.elgg-module-aside input[name="password"]', password);
+  await page.click('.elgg-module-aside button[type="submit"]');
+  await page.waitForURL(url => !url.toString().includes('/login'), { timeout: 15000 });
 }
 
 export async function queryDb(sql: string, params: any[] = []) {

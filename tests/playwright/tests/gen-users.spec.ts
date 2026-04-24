@@ -12,7 +12,7 @@ import { loginAs, countFakerEntities, getFakerEntities } from '../helpers/elgg';
  */
 test.describe('hypeFaker gen_users + delete', () => {
   test.beforeEach(async ({ page }) => {
-    await loginAs(page, 'admin', 'admin123');
+    await loginAs(page, 'admin');
   });
 
   test('form submit creates fake users and UI shows them', async ({ page }) => {

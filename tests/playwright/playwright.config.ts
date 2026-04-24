@@ -2,9 +2,9 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
-  baseURL: process.env.ELGG_BASE_URL || 'http://elgg',
   timeout: 60000,
   use: {
+    baseURL: process.env.ELGG_BASE_URL || 'http://elgg',
     ignoreHTTPSErrors: true,
   },
   // hypeFaker mutates global site state (users, groups, content) — must

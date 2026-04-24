@@ -11,7 +11,7 @@ import { loginAs } from '../helpers/elgg';
  */
 test.describe('hypeFaker admin UI', () => {
   test.beforeEach(async ({ page }) => {
-    await loginAs(page, 'admin', 'admin123');
+    await loginAs(page, 'admin');
   });
 
   test('admin develop menu lists faker entry', async ({ page }) => {
