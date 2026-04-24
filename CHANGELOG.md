@@ -1,3 +1,12 @@
+# Unreleased
+
+### Migrations
+
+* Elgg 4.x → 5.x: port Hook API to Event API, replace `add_translation()`
+  with `return array(...)`, swap session access to `session_manager`,
+  replace abandoned `fzaninotto/faker` with `fakerphp/faker`, adapt PHPUnit
+  tests for 5.x return types, switch Docker test stack to 5.x template.
+
 <a name="2.1.0"></a>
 # [2.1.0](https://github.com/hypeJunction/hypeFaker/compare/2.0.1...v2.1.0) (2016-09-11)
 
