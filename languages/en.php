@@ -1,6 +1,6 @@
 <?php
 
-$english = array(
+return array(
 
 	'admin:developers:faker' => 'Generate Demo Data',
 
@@ -88,5 +88,3 @@ $english = array(
 	'faker:gen_location:success' => 'Location has been generated for %s entities',
 	'faker:gen_location:error' => 'Location has been generated for %s of %s entities',
 );
-
-add_translation('en', $english);
