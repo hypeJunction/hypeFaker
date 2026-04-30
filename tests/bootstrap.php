@@ -7,6 +7,16 @@
 // tests/ -> mod/hypeFaker/ -> mod/ -> elgg_root/
 $elggRoot = dirname(dirname(dirname(__DIR__)));
 
+// Load plugin's vendor FIRST so the main Elgg autoloader can prepend itself on top.
+// Composer registers with prepend=true, so last-loaded wins for conflicting namespaces.
+// Loading plugin's vendor first ensures main Elgg's Elgg\ classes take precedence.
+$pluginRoot = dirname(__DIR__);
+if (file_exists($pluginRoot . '/vendor/autoload.php')) {
+    require_once $pluginRoot . '/vendor/autoload.php';
+} elseif (file_exists($pluginRoot . '/autoloader.php')) {
+    require_once $pluginRoot . '/autoloader.php';
+}
+
 require_once $elggRoot . '/vendor/autoload.php';
 
 // Load Elgg test classes (UnitTestCase, IntegrationTestCase, etc.)
@@ -17,13 +27,5 @@ spl_autoload_register(function ($class) use ($testClassesDir) {
         require_once $file;
     }
 });
-
-// Load plugin autoloader (Composer) if present
-$pluginRoot = dirname(__DIR__);
-if (file_exists($pluginRoot . '/vendor/autoload.php')) {
-    require_once $pluginRoot . '/vendor/autoload.php';
-} elseif (file_exists($pluginRoot . '/autoloader.php')) {
-    require_once $pluginRoot . '/autoloader.php';
-}
 
 \Elgg\Application::loadCore();
