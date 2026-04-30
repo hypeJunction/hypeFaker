@@ -1,6 +1,10 @@
 <?php
 
 return [
+	'plugin' => [
+		'version' => '5.0.0',
+	],
+
 	'bootstrap' => \hypeJunction\Faker\Bootstrap::class,
 
 	'actions' => [
