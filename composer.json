@@ -1,5 +1,6 @@
 {
 	"name": "hypejunction/hypefaker",
+	"version": "4.0.0",
 	"type": "elgg-plugin",
 	"description": "Generate fake data for your Elgg site",
 	"homepage": "http://hypejunction.com",
