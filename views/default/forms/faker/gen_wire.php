@@ -7,18 +7,18 @@ echo '</div>';
 echo '<div class="elgg-body">';
 echo '<div>';
 echo '<label>' . elgg_echo('faker:gen_wire:count') . '</label>';
-echo elgg_view('input/text', array(
+echo elgg_view('input/text', [
 	'name' => 'count',
 	'value' => 10,
-));
+]);
 echo '</div>';
 
 echo '<div>';
 echo '<label>' . elgg_echo('faker:gen_wire:max_replies') . '</label>';
-echo elgg_view('input/text', array(
+echo elgg_view('input/text', [
 	'name' => 'max_replies',
 	'value' => 10,
-));
+]);
 echo '</div>';
 
 echo '</div>';

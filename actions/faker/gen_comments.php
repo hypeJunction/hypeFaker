@@ -1,67 +1,74 @@
 <?php
 
 use Faker\Factory;
+
 set_time_limit(0);
-$success = $error = 0;
+$error = 0;
+$success = $error;
 $count = (int) get_input('count');
 $reply_count = (int) get_input('reply_count', 0);
 $locale = elgg_get_plugin_setting('locale', 'hypefaker', 'en_US');
 $faker = Factory::create($locale);
 $entities = new \ElggBatch('elgg_get_entities', ['types' => 'object', 'subtypes' => ['blog', 'bookmarks', 'file', 'page', 'page_top'], 'limit' => 0, 'metadata_names' => '__faker']);
 foreach ($entities as $entity) {
-    if ($entity->getContainerEntity() instanceof \ElggGroup) {
-        $users = elgg_get_entities(array('types' => 'user', 'limit' => $count, 'order_by' => 'RAND()', 'metadata_names' => '__faker', 'relationship' => 'member', 'relationship_guid' => $entity->container_guid, 'inverse_relationship' => true));
-    } else {
-        $users = elgg_get_entities(array('types' => 'user', 'limit' => $count, 'order_by' => 'RAND()', 'metadata_names' => '__faker', 'relationship' => 'friend', 'relationship_guid' => $entity->owner_guid));
-    }
-    if (!$users) {
-        $users = [];
-    }
-    $users[] = $entity->getOwnerEntity();
-    for ($i = 0; $i < $count; $i++) {
-        $owner = $users[array_rand($users, 1)];
-        if (!$entity->canComment($owner->guid)) {
-            $error++;
-            continue;
-        }
-        $comment = new \ElggComment();
-        $comment->subtype = 'comment';
-        $comment->owner_guid = $owner->guid;
-        $comment->container_guid = $entity->guid;
-        $comment->description = $faker->text(rand(25, 1000));
-        $comment->access_id = $entity->access_id;
-        $comment->time_created = rand($entity->time_created, time());
-        $comment->__faker = true;
-        if ($comment->save()) {
-            $success++;
-            elgg_create_river_item(array('view' => 'river/object/comment/create', 'action_type' => 'comment', 'subject_guid' => $comment->owner_guid, 'object_guid' => $comment->guid, 'target_guid' => $entity->guid));
-            for ($k = 0; $k < $reply_count; $k++) {
-                $owner = $users[array_rand($users, 1)];
-                if ($comment->canComment($owner->guid)) {
-                    $reply = new \ElggComment();
-                    $reply->subtype = 'comment';
-                    $reply->owner_guid = $owner->guid;
-                    $reply->container_guid = $comment->guid;
-                    $reply->description = $faker->text(rand(25, 1000));
-                    $reply->access_id = $entity->access_id;
-                    $reply->time_created = rand($comment->time_created, time());
-                    $reply->__faker = true;
-                    if ($reply->save()) {
-                        $success++;
-                        elgg_create_river_item(array('view' => 'river/object/comment/create', 'action_type' => 'comment', 'subject_guid' => $reply->owner_guid, 'object_guid' => $reply->guid, 'target_guid' => $comment->guid));
-                    } else {
-                        $error++;
-                    }
-                }
-            }
-        } else {
-            $error++;
-        }
-    }
+	if ($entity->getContainerEntity() instanceof \ElggGroup) {
+		$users = elgg_get_entities(['types' => 'user', 'limit' => $count, 'order_by' => 'RAND()', 'metadata_names' => '__faker', 'relationship' => 'member', 'relationship_guid' => $entity->container_guid, 'inverse_relationship' => true]);
+	} else {
+		$users = elgg_get_entities(['types' => 'user', 'limit' => $count, 'order_by' => 'RAND()', 'metadata_names' => '__faker', 'relationship' => 'friend', 'relationship_guid' => $entity->owner_guid]);
+	}
+
+	if (!$users) {
+		$users = [];
+	}
+
+	$users[] = $entity->getOwnerEntity();
+	for ($i = 0; $i < $count; $i++) {
+		$owner = $users[array_rand($users, 1)];
+		if (!$entity->canComment($owner->guid)) {
+			$error++;
+			continue;
+		}
+
+		$comment = new \ElggComment();
+		$comment->subtype = 'comment';
+		$comment->owner_guid = $owner->guid;
+		$comment->container_guid = $entity->guid;
+		$comment->description = $faker->text(rand(25, 1000));
+		$comment->access_id = $entity->access_id;
+		$comment->time_created = rand($entity->time_created, time());
+		$comment->__faker = true;
+		if ($comment->save()) {
+			$success++;
+			elgg_create_river_item(['view' => 'river/object/comment/create', 'action_type' => 'comment', 'subject_guid' => $comment->owner_guid, 'object_guid' => $comment->guid, 'target_guid' => $entity->guid]);
+			for ($k = 0; $k < $reply_count; $k++) {
+				$owner = $users[array_rand($users, 1)];
+				if ($comment->canComment($owner->guid)) {
+					$reply = new \ElggComment();
+					$reply->subtype = 'comment';
+					$reply->owner_guid = $owner->guid;
+					$reply->container_guid = $comment->guid;
+					$reply->description = $faker->text(rand(25, 1000));
+					$reply->access_id = $entity->access_id;
+					$reply->time_created = rand($comment->time_created, time());
+					$reply->__faker = true;
+					if ($reply->save()) {
+						$success++;
+						elgg_create_river_item(['view' => 'river/object/comment/create', 'action_type' => 'comment', 'subject_guid' => $reply->owner_guid, 'object_guid' => $reply->guid, 'target_guid' => $comment->guid]);
+					} else {
+						$error++;
+					}
+				}
+			}
+		} else {
+			$error++;
+		}
+	}
 }
+
 if ($error) {
-    elgg_register_success_message(elgg_echo('faker:gen_comments:error', array($success, $error)));
+	elgg_register_success_message(elgg_echo('faker:gen_comments:error', [$success, $error]));
 } else {
-    elgg_register_success_message(elgg_echo('faker:gen_comments:success', array($success)));
+	elgg_register_success_message(elgg_echo('faker:gen_comments:success', [$success]));
 }
+
 return elgg_redirect_response(REFERRER);

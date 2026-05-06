@@ -7,10 +7,10 @@ echo '</div>';
 echo '<div class="elgg-body">';
 echo '<div>';
 echo '<label>' . elgg_echo('faker:gen_messages:count') . '</label>';
-echo elgg_view('input/text', array(
+echo elgg_view('input/text', [
 	'name' => 'count',
 	'value' => 5,
-));
+]);
 echo '</div>';
 
 echo '</div>';

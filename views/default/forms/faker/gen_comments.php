@@ -7,17 +7,17 @@ echo '</div>';
 echo '<div class="elgg-body">';
 echo '<div>';
 echo '<label>' . elgg_echo('faker:gen_comments:count') . '</label>';
-echo elgg_view('input/text', array(
+echo elgg_view('input/text', [
 	'name' => 'count',
 	'value' => 10,
-));
+]);
 echo '</div>';
 echo '<div>';
 echo '<label>' . elgg_echo('faker:gen_comments:reply_count') . '</label>';
-echo elgg_view('input/text', array(
+echo elgg_view('input/text', [
 	'name' => 'reply_count',
 	'value' => 0,
-));
+]);
 echo '</div>';
 echo '</div>';
 

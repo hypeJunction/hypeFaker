@@ -4,8 +4,9 @@ use Faker\Factory;
 
 set_time_limit(0);
 
-$success = $error = 0;
-$exceptions = array();
+$error = 0;
+$success = $error;
+$exceptions = [];
 
 $count = (int) get_input('count');
 $friends_count = (int) rand(1, $count);
@@ -16,7 +17,6 @@ $locale = elgg_get_plugin_setting('locale', 'hypefaker', 'en_US');
 $faker = Factory::create($locale);
 
 for ($i = 0; $i < $count; $i++) {
-
 	if (!$password) {
 		$password = elgg_generate_password();
 	}
@@ -25,7 +25,7 @@ for ($i = 0; $i < $count; $i++) {
 	$username = strtolower(str_replace(' ', '', $name));
 	$username = iconv('UTF-8', 'ASCII//TRANSLIT', $username);
 	$blacklist = '/[\x{0080}-\x{009f}\x{00a0}\x{2000}-\x{200f}\x{2028}-\x{202f}\x{3000}\x{e000}-\x{f8ff}]/u';
-	$blacklist2 = array(' ', '\'', '/', '\\', '"', '*', '&', '?', '#', '%', '^', '(', ')', '{', '}', '[', ']', '~', '?', '<', '>', ';', '|', '¬', '`', '@', '-', '+', '=');
+	$blacklist2 = [' ', '\'', '/', '\\', '"', '*', '&', '?', '#', '%', '^', '(', ')', '{', '}', '[', ']', '~', '?', '<', '>', ';', '|', '¬', '`', '@', '-', '+', '='];
 	$username = preg_replace($blacklist, '', $username);
 	$username = str_replace($blacklist2, '.', $username);
 	if ($domain) {
@@ -56,12 +56,10 @@ for ($i = 0; $i < $count; $i++) {
 }
 
 if (!empty($users)) {
-
 	foreach ($users as $guid => $user) {
-
 		$user->description = $faker->text(200);
 		$user->briefdescription = $faker->catchPhrase;
-		$user->location = implode(', ', array($faker->city, $faker->country));
+		$user->location = implode(', ', [$faker->city, $faker->country]);
 		$user->setLatLong($faker->latitude, $faker->longitude);
 		$user->interests = $faker->words(rand(1, 10));
 		$user->skills = $faker->words(rand(1, 10));
@@ -69,7 +67,7 @@ if (!empty($users)) {
 		$user->phone = $faker->phoneNumber;
 		$user->mobile = $faker->phoneNumber;
 		$user->website = $faker->url;
-		$user->twitter = "@" . $username;
+		$user->twitter = '@' . $username;
 
 		// In Elgg 3.x, save only master icon and let other sizes generate on demand
 		$profile_icon_url = $faker->imageURL();
@@ -94,12 +92,12 @@ if (!empty($users)) {
 			$tmp->close();
 
 			if ($user->saveIconFromElggFile($tmp, 'icon')) {
-				elgg_create_river_item(array(
+				elgg_create_river_item([
 					'view' => 'river/user/default/profileiconupdate',
 					'action_type' => 'update',
 					'subject_guid' => $user->guid,
 					'object_guid' => $user->guid,
-				));
+				]);
 			}
 
 			$tmp->delete();
@@ -116,9 +114,9 @@ if (!empty($users)) {
 }
 
 if ($error) {
-	elgg_register_success_message(elgg_echo('faker:gen_users:error', array($success, $error, implode('<br />', $exceptions))));
+	elgg_register_success_message(elgg_echo('faker:gen_users:error', [$success, $error, implode('<br />', $exceptions)]));
 } else {
-	elgg_register_success_message(elgg_echo('faker:gen_users:success', array($success)));
+	elgg_register_success_message(elgg_echo('faker:gen_users:success', [$success]));
 }
 
 return elgg_redirect_response(REFERRER);

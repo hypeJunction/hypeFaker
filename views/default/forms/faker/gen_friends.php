@@ -7,24 +7,24 @@ echo '</div>';
 echo '<div class="elgg-body">';
 echo '<div>';
 echo '<label>' . elgg_echo('faker:gen_friends:max') . '</label>';
-echo elgg_view('input/text', array(
+echo elgg_view('input/text', [
 	'name' => 'max',
 	'value' => 10,
-));
+]);
 echo '</div>';
 echo '</div>';
 
 echo '<div class="elgg-body">';
 echo '<div>';
 echo '<label>' . elgg_echo('faker:gen_friends:reciprocal') . '</label>';
-echo elgg_view('input/dropdown', array(
+echo elgg_view('input/dropdown', [
 	'name' => 'reciprocal',
 	'value' => 0,
 	'options_values' => [
 		0 => elgg_echo('option:no'),
 		1 => elgg_echo('option:yes'),
 	]
-));
+]);
 echo '</div>';
 echo '</div>';
 
