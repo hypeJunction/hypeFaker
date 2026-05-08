@@ -6,7 +6,8 @@
     "require": {
         "elgg/elgg": "~5.1.0",
         "composer/installers": "^1.0 || ^2.0",
-        "phpunit/phpunit": "~9.5"
+        "phpunit/phpunit": "~9.5",
+        "fakerphp/faker": "^1.23"
     },
     "replace": {
         "roave/security-advisories": "dev-master"
