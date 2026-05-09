@@ -1,6 +1,6 @@
 hypeFaker
 =========
-![Elgg 2.0](https://img.shields.io/badge/Elgg-2.0.x-orange.svg?style=flat-square)
+![Elgg 5.1.0](https://img.shields.io/badge/Elgg-5.1.0-orange.svg?style=flat-square)
 
 Populates Elgg sites with demo data for development, testing and preview purposes.
 
@@ -17,11 +17,9 @@ Populates Elgg sites with demo data for development, testing and preview purpose
 * Generate wire posts - create wire threads
 * Generate messages - create inbox and outbox messages
 
-
 ## Credits / Acknolwedgements ##
 
 * This plugin depends on the wonderful PHP library by François Zaninotto - https://github.com/fzaninotto/Faker
-
 
 ## Screenshots ##
 
