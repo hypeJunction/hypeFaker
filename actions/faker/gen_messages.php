@@ -25,10 +25,8 @@ foreach ($senders as $sender) {
 		$recipient_guid = $recipient->guid;
 		$subject = $faker->sentence();
 		$body = $faker->text(1000);
-		$message_to = new ElggObject();
-		$message_sent = new ElggObject();
-		$message_to->subtype = 'messages';
-		$message_sent->subtype = 'messages';
+		$message_to = new \ElggMessage();
+		$message_sent = new \ElggMessage();
 		$message_to->owner_guid = $recipient_guid;
 		$message_to->container_guid = $recipient_guid;
 		$message_sent->owner_guid = $sender_guid;

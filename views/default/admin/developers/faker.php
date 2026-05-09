@@ -56,7 +56,7 @@ if ($fake_user_count) {
 
 $fakes = elgg_list_entities(['metadata_names' => '__faker']);
 $content = '<div id="faker-log">' . $fakes . '</div>';
-$delete = elgg_view('output/url', ['text' => elgg_echo('faker:delete'), 'href' => 'action/faker/delete', 'confirm' => true, 'class' => 'elgg-button elgg-button-action']);
+$delete = elgg_view('output/url', ['text' => elgg_echo('faker:delete'), 'href' => 'action/faker/delete', 'confirm' => true, 'class' => 'elgg-button']);
 echo '<div style="display:flex;gap:1rem;align-items:flex-start">';
 echo '<div style="flex:1;min-width:0">';
 echo '<div class="pam">';

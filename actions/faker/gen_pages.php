@@ -20,8 +20,8 @@ function hypefaker_add_page($owner, $container, $parent = null) {
 	$write_access_array = get_write_access_array($owner->guid);
 	unset($write_access_array[ACCESS_PUBLIC]);
 	$write_access_id = array_rand($write_access_array, 1);
-	$page = new ElggObject();
-	$page->subtype = $parent ? 'page' : 'page_top';
+	$page = new \ElggPage();
+
 	$page->owner_guid = $owner->guid;
 	$page->container_guid = $container->guid;
 	$page->title = $faker->sentence(6);

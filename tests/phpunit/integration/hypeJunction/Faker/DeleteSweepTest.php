@@ -3,7 +3,6 @@
 namespace hypeJunction\Faker;
 
 use Elgg\IntegrationTestCase;
-use ElggObject;
 
 /**
  * The delete action sweeps every entity (users + objects) carrying the
@@ -67,8 +66,7 @@ class DeleteSweepTest extends IntegrationTestCase
         $this->assertInstanceOf(\ElggUser::class, $keeper, 'admin user not found');
 
         _elgg_services()->session_manager->setLoggedInUser($keeper);
-        $victim = new ElggObject();
-        $victim->setSubtype('blog');
+        $victim = new \ElggBlog();
         $victim->owner_guid = $keeper->guid;
         $victim->container_guid = $keeper->guid;
         $victim->access_id = ACCESS_PUBLIC;

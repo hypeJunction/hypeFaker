@@ -21,9 +21,7 @@ for ($i = 0; $i < $count; $i++) {
 	foreach ($containers as $container) {
 		elgg_set_page_owner_guid($container->guid);
 		$access_array = get_write_access_array($owner->guid);
-		// ElggBlog class was removed in 3.x, use ElggObject with subtype 'blog'
-		$blog = new ElggObject();
-		$blog->subtype = 'blog';
+		$blog = new \ElggBlog();
 		$blog->owner_guid = $owner->guid;
 		$blog->container_guid = $container->guid;
 		$blog->status = $statuses[array_rand($statuses, 1)];

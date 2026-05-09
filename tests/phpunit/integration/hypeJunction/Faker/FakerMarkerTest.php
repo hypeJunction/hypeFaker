@@ -3,7 +3,6 @@
 namespace hypeJunction\Faker;
 
 use Elgg\IntegrationTestCase;
-use ElggObject;
 
 /**
  * The `__faker` metadata marker is the single load-bearing API contract
@@ -29,8 +28,7 @@ class FakerMarkerTest extends IntegrationTestCase
     public function testFakerMarkerPersistsOnObject(): void
     {
         $user = $this->createUser();
-        $obj = new ElggObject();
-        $obj->setSubtype('blog');
+        $obj = new \ElggBlog();
         $obj->owner_guid = $user->guid;
         $obj->container_guid = $user->guid;
         $obj->access_id = ACCESS_PUBLIC;
@@ -51,8 +49,7 @@ class FakerMarkerTest extends IntegrationTestCase
     public function testFakerEntitiesFindableByMetadataName(): void
     {
         $user = $this->createUser();
-        $obj = new ElggObject();
-        $obj->setSubtype('blog');
+        $obj = new \ElggBlog();
         $obj->owner_guid = $user->guid;
         $obj->container_guid = $user->guid;
         $obj->access_id = ACCESS_PUBLIC;
@@ -84,8 +81,7 @@ class FakerMarkerTest extends IntegrationTestCase
             'count' => true,
         ]);
 
-        $obj = new ElggObject();
-        $obj->setSubtype('blog');
+        $obj = new \ElggBlog();
         $obj->owner_guid = $user->guid;
         $obj->container_guid = $user->guid;
         $obj->access_id = ACCESS_PUBLIC;
