@@ -12,6 +12,7 @@
 require_once __DIR__ . '/autoloader.php';
 
 elgg_register_event_handler('init', 'system', 'hypefaker_init');
+elgg_register_plugin_hook_handler('seeds', 'database', 'hypefaker_register_seeds');
 
 /**
  * Initialize the plugin
@@ -46,4 +47,18 @@ function hypefaker_init() {
 		'context' => 'admin',
 		'section' => 'develop'
 	));
+}
+
+/**
+ * Register seed classes for `elgg-cli database:seed`
+ *
+ * @param \Elgg\Hook $hook
+ * @return array
+ */
+function hypefaker_register_seeds(\Elgg\Hook $hook) {
+	$seeds = $hook->getValue();
+	$seeds[] = \Hypejunction\Faker\Seeds\Blogs::class;
+	$seeds[] = \Hypejunction\Faker\Seeds\Discussions::class;
+	$seeds[] = \Hypejunction\Faker\Seeds\Wire::class;
+	return $seeds;
 }

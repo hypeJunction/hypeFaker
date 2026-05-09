@@ -25,6 +25,11 @@
 		"hypejunction/hypeapps": "*",
 		"fzaninotto/faker": "^1.9"
 	},
+	"autoload": {
+		"psr-4": {
+			"Hypejunction\\Faker\\": "classes/"
+		}
+	},
 	"config": {
 		"allow-plugins": {
 			"composer/installers": true
