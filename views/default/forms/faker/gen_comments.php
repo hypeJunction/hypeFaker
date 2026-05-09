@@ -4,7 +4,7 @@ echo '<div class="elgg-head">';
 echo elgg_view_title(elgg_echo('faker:gen_comments'));
 echo '</div>';
 
-echo '<div class="elgg-body">';
+echo '<div class="faker-form-body">';
 echo '<div>';
 echo '<label>' . elgg_echo('faker:gen_comments:count') . '</label>';
 echo elgg_view('input/text', [

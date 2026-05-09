@@ -3,7 +3,7 @@
 /**
  * UI for generating fake data
  */
-elgg_require_js('admin.faker');
+elgg_import_esm('admin.faker');
 $forms = elgg_view_form('faker/gen_users');
 $fake_user_count = elgg_get_entities(['types' => 'user', 'metadata_names' => '__faker', 'count' => true]);
 if ($fake_user_count) {
@@ -57,13 +57,13 @@ if ($fake_user_count) {
 $fakes = elgg_list_entities(['metadata_names' => '__faker']);
 $content = '<div id="faker-log">' . $fakes . '</div>';
 $delete = elgg_view('output/url', ['text' => elgg_echo('faker:delete'), 'href' => 'action/faker/delete', 'confirm' => true, 'class' => 'elgg-button elgg-button-action']);
-echo '<div class="clearfix">';
-echo '<div class="elgg-col elgg-col-1of2">';
+echo '<div style="display:flex;gap:1rem;align-items:flex-start">';
+echo '<div style="flex:1;min-width:0">';
 echo '<div class="pam">';
 echo $forms;
 echo '</div>';
 echo '</div>';
-echo '<div class="elgg-col elgg-col-1of2">';
+echo '<div style="flex:1;min-width:0">';
 echo '<div class="pam">';
 echo elgg_view_module('aside', elgg_echo('faker:data'), $content, ['footer' => $delete]);
 echo '</div>';
