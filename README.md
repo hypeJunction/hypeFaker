@@ -1,6 +1,6 @@
 hypeFaker
 =========
-![Elgg 5.1.0](https://img.shields.io/badge/Elgg-5.1.0-orange.svg?style=flat-square)
+![Elgg 7.x](https://img.shields.io/badge/Elgg-7.x-orange.svg?style=flat-square)
 
 Populates Elgg sites with demo data for development, testing and preview purposes.
 
@@ -25,3 +25,9 @@ Populates Elgg sites with demo data for development, testing and preview purpose
 
 ![alt text](https://raw.github.com/hypeJunction/hypeFaker/master/screenshots/admin.png "Admin Interface")
 ![alt text](https://raw.github.com/hypeJunction/hypeFaker/master/screenshots/content.png "Generated Content")
+
+## Compatibility
+
+| Plugin version | Elgg version |
+|---|---|
+| current | 7.x |
