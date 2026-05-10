@@ -1,58 +1,58 @@
 {
-	"name": "hypejunction/hypefaker",
-	"version": "5.0.0",
-	"type": "elgg-plugin",
-	"description": "Generate fake data for your Elgg site",
-	"homepage": "https://github.com/hypeJunction/hypefaker",
-	"keywords": [
-		"elgg",
-		"plugin",
-		"demo",
-		"lorem ipsum"
-	],
-	"license": "GPL-2.0",
-	"authors": [
-		{
-			"name": "Ismayil Khayredinov",
-			"email": "ismayil.khayredinov@gmail.com"
-		}
-	],
-	"extra": {
-		"installer-name": "hypefaker",
-		"elgg-plugin": {
-			"id": "hypefaker"
-		}
-	},
-	"autoload": {
-		"psr-4": {
-			"hypeJunction\\Faker\\": "classes/hypeJunction/Faker/"
-		}
-	},
-	"require": {
-		"php": ">=8.3",
-		"ext-curl": "*",
-		"ext-intl": "*",
-		"composer/installers": "^2.0",
-		"fakerphp/faker": "^1.23",
-		"elgg/elgg": "~7.0.0"
-	},
-	"conflict": {
-		"elgg/elgg": "<5.0"
-	},
-	"minimum-stability": "dev",
-	"prefer-stable": true,
-	"replace": {
-		"roave/security-advisories": "dev-master"
-	},
-	"repositories": [
-		{
-			"type": "composer",
-			"url": "https://asset-packagist.org"
-		}
-	],
-	"config": {
-		"allow-plugins": {
-			"composer/installers": true
-		}
-	}
+    "name": "hypejunction/hypefaker",
+    "version": "5.0.0",
+    "type": "elgg-plugin",
+    "description": "Generate fake data for your Elgg site",
+    "homepage": "https://github.com/hypeJunction/hypeFaker",
+    "keywords": [
+        "elgg",
+        "plugin",
+        "demo",
+        "lorem ipsum"
+    ],
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Ismayil Khayredinov",
+            "email": "ismayil.khayredinov@gmail.com"
+        }
+    ],
+    "extra": {
+        "installer-name": "hypefaker",
+        "elgg-plugin": {
+            "id": "hypefaker"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "hypeJunction\\Faker\\": "classes/hypeJunction/Faker/"
+        }
+    },
+    "require": {
+        "php": ">=8.3",
+        "ext-curl": "*",
+        "ext-intl": "*",
+        "composer/installers": "^2.0",
+        "fakerphp/faker": "^1.23",
+        "elgg/elgg": "~7.0.0"
+    },
+    "conflict": {
+        "elgg/elgg": "<5.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "replace": {
+        "roave/security-advisories": "dev-master"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    }
 }
