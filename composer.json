@@ -1,6 +1,6 @@
 {
     "name": "hypejunction/hypefaker",
-    "version": "5.0.0",
+    "version": "7.0.0",
     "type": "elgg-plugin",
     "description": "Generate fake data for your Elgg site",
     "homepage": "https://github.com/hypeJunction/hypeFaker",
