@@ -1,4 +1,6 @@
 hypeFaker
+
+![Elgg 6.x](https://img.shields.io/badge/Elgg-6.x-orange.svg?style=flat-square)
 =========
 ![Elgg 5.1.0](https://img.shields.io/badge/Elgg-5.1.0-orange.svg?style=flat-square)
 
