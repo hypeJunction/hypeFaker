@@ -28,7 +28,7 @@ foreach ($groups as $group) {
 		$invites_count = rand(1, $member_count_max);
 		$invitees = elgg_get_entities(['types' => 'user', 'limit' => $invites_count, 'order_by' => 'RAND()', 'metadata_names' => '__faker']);
 		foreach ($invitees as $invitee) {
-			if (!check_entity_relationship($invitee->guid, 'member', $group->guid)) {
+			if (!(get_entity($invitee->guid)?->hasRelationship($group->guid, 'member') ?? false)) {
 				if (add_entity_relationship($group->guid, 'invited', $invitee->guid)) {
 					$rel_invited++;
 				}
@@ -38,7 +38,7 @@ foreach ($groups as $group) {
 		$requests_count = rand(1, $member_count_max);
 		$requestors = elgg_get_entities(['types' => 'user', 'limit' => $requests_count, 'order_by' => 'RAND()', 'metadata_names' => '__faker']);
 		foreach ($requestors as $requestor) {
-			if (!check_entity_relationship($group->guid, 'invited', $requestor->guid) && !check_entity_relationship($requestor->guid, 'member', $group->guid)) {
+			if (!(get_entity($group->guid)?->hasRelationship($requestor->guid, 'invited') ?? false) && !(get_entity($requestor->guid)?->hasRelationship($group->guid, 'member') ?? false)) {
 				if (add_entity_relationship($user->guid, 'membership_request', $user->guid)) {
 					$rel_membership_request++;
 				}
