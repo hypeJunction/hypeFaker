@@ -41,7 +41,7 @@ class PluginActivationTest extends IntegrationTestCase
         if (function_exists('hypefaker_init')) {
             hypefaker_init();
         }
-        $menu = _elgg_services()->menus ?? null;
+        $menu = \_elgg_services()->menus ?? null;
         // Menu service API varies across versions; assert soft signal.
         $this->assertTrue(true);
     }
