@@ -36,7 +36,7 @@ class DeleteSweepTest extends IntegrationTestCase
         $u2->save();
 
         $remaining = 0;
-        elgg_call(ELGG_SHOW_DISABLED_ENTITIES | ELGG_IGNORE_ACCESS, function () use (&$remaining) {
+        \elgg_call(ELGG_SHOW_DISABLED_ENTITIES | ELGG_IGNORE_ACCESS, function () use (&$remaining) {
             $batch = new \ElggBatch('elgg_get_entities', [
                 'types' => 'user',
                 'limit' => 0,
@@ -47,7 +47,7 @@ class DeleteSweepTest extends IntegrationTestCase
                 $d->delete(true);
             }
 
-            $remaining = elgg_get_entities([
+            $remaining = \elgg_get_entities([
                 'types' => 'user',
                 'metadata_names' => '__faker',
                 'count' => true,
@@ -62,11 +62,11 @@ class DeleteSweepTest extends IntegrationTestCase
         // createUser() (Seeding trait) always marks users with __faker=true,
         // so they would be swept. Use the installed admin user as the keeper —
         // it was created by the Elgg installer without __faker metadata.
-        $admins = elgg_get_entities(['type' => 'user', 'limit' => 1]);
+        $admins = \elgg_get_entities(['type' => 'user', 'limit' => 1]);
         $keeper = $admins[0];
         $this->assertInstanceOf(\ElggUser::class, $keeper, 'admin user not found');
 
-        _elgg_services()->session_manager->setLoggedInUser($keeper);
+        \_elgg_services()->session_manager->setLoggedInUser($keeper);
         $victim = new ElggObject();
         $victim->setSubtype('blog');
         $victim->owner_guid = $keeper->guid;
@@ -75,9 +75,9 @@ class DeleteSweepTest extends IntegrationTestCase
         $victim->title = 'fake';
         $victim->__faker = true;
         $victim->save();
-        _elgg_services()->session_manager->removeLoggedInUser();
+        \_elgg_services()->session_manager->removeLoggedInUser();
 
-        elgg_call(ELGG_SHOW_DISABLED_ENTITIES | ELGG_IGNORE_ACCESS, function () {
+        \elgg_call(ELGG_SHOW_DISABLED_ENTITIES | ELGG_IGNORE_ACCESS, function () {
             $batch = new \ElggBatch('elgg_get_entities', [
                 'limit' => 0,
                 'metadata_names' => '__faker',
@@ -88,7 +88,7 @@ class DeleteSweepTest extends IntegrationTestCase
             }
         });
 
-        elgg_call(ELGG_IGNORE_ACCESS, function () use ($keeper, $victim) {
+        \elgg_call(ELGG_IGNORE_ACCESS, function () use ($keeper, $victim) {
             // Keeper (no __faker) must survive.
             $this->assertInstanceOf(\ElggUser::class, get_entity($keeper->guid));
             // Victim gone.

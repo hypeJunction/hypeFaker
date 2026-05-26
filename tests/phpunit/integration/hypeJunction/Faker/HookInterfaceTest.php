@@ -41,9 +41,9 @@ class HookInterfaceTest extends IntegrationTestCase
             return $event->getValue();
         };
 
-        elgg_register_event_handler('faker:test', 'all', $handler);
-        elgg_trigger_event_results('faker:test', 'all', []);
-        elgg_unregister_event_handler('faker:test', 'all', $handler);
+        \elgg_register_event_handler('faker:test', 'all', $handler);
+        \elgg_trigger_event_results('faker:test', 'all', []);
+        \elgg_unregister_event_handler('faker:test', 'all', $handler);
 
         $this->assertSame('faker:test', $received);
     }
