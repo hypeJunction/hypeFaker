@@ -47,9 +47,9 @@ class HookInterfaceTest extends IntegrationTestCase
             return $hook->getValue();
         };
 
-        elgg_register_plugin_hook_handler('faker:test', 'all', $handler);
-        elgg_trigger_plugin_hook('faker:test', 'all', [], []);
-        elgg_unregister_plugin_hook_handler('faker:test', 'all', $handler);
+        \elgg_register_plugin_hook_handler('faker:test', 'all', $handler);
+        \elgg_trigger_plugin_hook('faker:test', 'all', [], []);
+        \elgg_unregister_plugin_hook_handler('faker:test', 'all', $handler);
 
         $this->assertSame('faker:test', $received);
     }

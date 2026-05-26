@@ -38,11 +38,11 @@ class FakerMarkerTest extends IntegrationTestCase
         $obj->description = 'lorem ipsum';
         $obj->__faker = true;
 
-        elgg_get_session()->setLoggedInUser($user);
+        \elgg_get_session()->setLoggedInUser($user);
         $this->assertNotFalse($obj->save());
-        elgg_get_session()->removeLoggedInUser();
+        \elgg_get_session()->removeLoggedInUser();
 
-        _elgg_services()->entityCache->delete($obj->guid);
+        \_elgg_services()->entityCache->delete($obj->guid);
         $loaded = get_entity($obj->guid);
         $this->assertEquals(1, (int) $loaded->__faker);
         $obj->delete();
@@ -59,11 +59,11 @@ class FakerMarkerTest extends IntegrationTestCase
         $obj->title = 'Fake blog for search';
         $obj->__faker = true;
 
-        elgg_get_session()->setLoggedInUser($user);
+        \elgg_get_session()->setLoggedInUser($user);
         $obj->save();
-        elgg_get_session()->removeLoggedInUser();
+        \elgg_get_session()->removeLoggedInUser();
 
-        $found = elgg_get_entities([
+        $found = \elgg_get_entities([
             'types' => 'object',
             'subtypes' => ['blog'],
             'metadata_names' => '__faker',
@@ -79,7 +79,7 @@ class FakerMarkerTest extends IntegrationTestCase
     public function testFakerEntityCountQuery(): void
     {
         $user = $this->createUser();
-        $before = elgg_get_entities([
+        $before = \elgg_get_entities([
             'metadata_names' => '__faker',
             'count' => true,
         ]);
@@ -92,11 +92,11 @@ class FakerMarkerTest extends IntegrationTestCase
         $obj->title = 'counted';
         $obj->__faker = true;
 
-        elgg_get_session()->setLoggedInUser($user);
+        \elgg_get_session()->setLoggedInUser($user);
         $obj->save();
-        elgg_get_session()->removeLoggedInUser();
+        \elgg_get_session()->removeLoggedInUser();
 
-        $after = elgg_get_entities([
+        $after = \elgg_get_entities([
             'metadata_names' => '__faker',
             'count' => true,
         ]);
@@ -111,11 +111,11 @@ class FakerMarkerTest extends IntegrationTestCase
         $user = $this->createUser();
         $user->__faker = true;
 
-        elgg_get_session()->setLoggedInUser($user);
+        \elgg_get_session()->setLoggedInUser($user);
         $this->assertNotFalse($user->save());
-        elgg_get_session()->removeLoggedInUser();
+        \elgg_get_session()->removeLoggedInUser();
 
-        $found = elgg_get_entities([
+        $found = \elgg_get_entities([
             'types' => 'user',
             'metadata_names' => '__faker',
             'limit' => 0,
