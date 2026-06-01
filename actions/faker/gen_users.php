@@ -112,9 +112,9 @@ if (!empty($users)) {
 }
 
 if ($error) {
-	elgg_register_success_message(elgg_echo('faker:gen_users:error', array($success, $error, implode('<br />', $exceptions))));
+	system_message(elgg_echo('faker:gen_users:error', array($success, $error, implode('<br />', $exceptions))));
 } else {
-	elgg_register_success_message(elgg_echo('faker:gen_users:success', array($success)));
+	system_message(elgg_echo('faker:gen_users:success', array($success)));
 }
 
 forward(REFERER);

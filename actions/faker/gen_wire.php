@@ -72,8 +72,8 @@ foreach ($users as $user) {
     }
 }
 if ($error) {
-    elgg_register_success_message(elgg_echo('faker:gen_wire:error', array($success, $error)));
+    system_message(elgg_echo('faker:gen_wire:error', array($success, $error)));
 } else {
-    elgg_register_success_message(elgg_echo('faker:gen_wire:success', array($success)));
+    system_message(elgg_echo('faker:gen_wire:success', array($success)));
 }
 forward(REFERER);

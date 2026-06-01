@@ -56,8 +56,8 @@ for ($i = 0; $i < $count; $i++) {
     }
 }
 if ($error) {
-    elgg_register_success_message(elgg_echo('faker:gen_files:error', array($success, $error)));
+    system_message(elgg_echo('faker:gen_files:error', array($success, $error)));
 } else {
-    elgg_register_success_message(elgg_echo('faker:gen_files:success', array($success)));
+    system_message(elgg_echo('faker:gen_files:success', array($success)));
 }
 forward(REFERER);

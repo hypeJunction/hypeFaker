@@ -31,8 +31,8 @@ foreach ($entities as $entity) {
     }
 }
 if ($error) {
-    elgg_register_success_message(elgg_echo('faker:gen_location:error', array($success, $error)));
+    system_message(elgg_echo('faker:gen_location:error', array($success, $error)));
 } else {
-    elgg_register_success_message(elgg_echo('faker:gen_location:success', array($success)));
+    system_message(elgg_echo('faker:gen_location:success', array($success)));
 }
 forward(REFERER);
