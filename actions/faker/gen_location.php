@@ -22,6 +22,7 @@ $entities = new ElggBatch('elgg_get_entities', [
 		}
 	],
 ]);
+// TODO(6.x): elgg_get_country_info removed in 6.x — no direct core replacement; provide country data another way
 $countries = elgg_get_country_info(['name', 'capital']);
 foreach ($entities as $entity) {
 	$country = $countries[array_rand($countries, 1)];

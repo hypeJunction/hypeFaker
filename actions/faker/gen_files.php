@@ -42,6 +42,7 @@ for ($i = 0; $i < $count; $i++) {
 		curl_close($ch);
 		$mime_type = $curl_info['content_type'];
 		$file->setMimeType($mime_type);
+		// TODO(6.x): elgg_get_file_simple_type removed in 6.x — derive simpletype from mime_type another way
 		$file->simpletype = elgg_get_file_simple_type($mime_type);
 		$file->open('write');
 		$file->write($file_contents);
