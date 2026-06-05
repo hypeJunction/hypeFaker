@@ -42,7 +42,7 @@ for ($i = 0; $i < $count; $i++) {
 		curl_close($ch);
 		$mime_type = $curl_info['content_type'];
 		$file->setMimeType($mime_type);
-		$file->simpletype = elgg_get_file_simple_type($mime_type);
+		$file->simpletype = _elgg_services()->mimetype->getSimpleType($mime_type);
 		$file->open('write');
 		$file->write($file_contents);
 		$file->close();
