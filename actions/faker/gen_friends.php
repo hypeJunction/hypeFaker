@@ -8,11 +8,10 @@ $reciprocal = (bool) get_input('reciprocal');
 $friends_count = rand(1, $max);
 $users = new ElggBatch('elgg_get_entities', ['types' => 'user', 'metadata_names' => '__faker', 'limit' => 0]);
 foreach ($users as $user) {
-	remove_entity_relationships($user->guid, 'friend');
-	// In Elgg 3.x, use API to manage access collections instead of raw SQL
-	$acls = get_user_access_collections($user->guid);
+	$user->removeAllRelationships('friend');
+	$acls = elgg_get_access_collections(['owner_guid' => $user->guid]);
 	foreach ($acls as $col) {
-		delete_access_collection($col->id);
+		$col->delete();
 	}
 
 	$friends = elgg_get_entities([
@@ -27,8 +26,8 @@ foreach ($users as $user) {
 		'metadata_names' => '__faker',
 	]);
 	$rand_friends = false;
-	$collection_id = create_access_collection('Best Fake Friends Collection', $user->guid);
-	if ($collection_id) {
+	$collection = elgg_create_access_collection('Best Fake Friends Collection', $user->guid);
+	if ($collection) {
 		$rand_friends = array_rand($friends, min(count($friends), rand(2, $friends_count)));
 		$collections++;
 	}
@@ -37,8 +36,8 @@ foreach ($users as $user) {
 		if ($user->addFriend($friend->guid)) {
 			$rels++;
 			elgg_create_river_item(['view' => 'river/relationship/friend/create', 'action_type' => 'friend', 'subject_guid' => $user->guid, 'object_guid' => $friend->guid]);
-			if ($rand_friends && array_key_exists($friends_key, $rand_friends)) {
-				add_user_to_access_collection($friend->guid, $collection_id);
+			if ($rand_friends && $collection && array_key_exists($friends_key, $rand_friends)) {
+				$collection->addMember($friend->guid);
 			}
 		}
 
@@ -61,11 +60,11 @@ foreach ($users as $user) {
 		'metadata_names' => '__faker',
 	]);
 	if ($random_acl_members) {
-		$collection_id = create_access_collection('Fake Arbitrary Collection', $user->guid);
-		if ($collection_id) {
+		$collection = elgg_create_access_collection('Fake Arbitrary Collection', $user->guid);
+		if ($collection) {
 			$collections++;
 			foreach ($random_acl_members as $random_acl_member) {
-				add_user_to_access_collection($random_acl_member->guid, $collection_id);
+				$collection->addMember($random_acl_member->guid);
 			}
 		}
 	}

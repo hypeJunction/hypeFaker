@@ -15,9 +15,9 @@ set_time_limit(0);
 function hypefaker_add_page($owner, $container, $parent = null) {
 	$locale = elgg_get_plugin_setting('locale', 'hypefaker', 'en_US');
 	$faker = Factory::create($locale);
-	$access_array = get_write_access_array($owner->guid);
+	$access_array = elgg_get_write_access_array($owner->guid);
 	$access_id = array_rand($access_array, 1);
-	$write_access_array = get_write_access_array($owner->guid);
+	$write_access_array = elgg_get_write_access_array($owner->guid);
 	unset($write_access_array[ACCESS_PUBLIC]);
 	$write_access_id = array_rand($write_access_array, 1);
 	$page = new \ElggPage();

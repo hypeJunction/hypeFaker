@@ -37,7 +37,6 @@ foreach ($entities as $entity) {
 			continue;
 		}
 
-		// In Elgg 3.x, use $entity->annotate() instead of procedural create_annotation()
 		$annotation_id = $entity->annotate('likes', 'likes', $entity->access_id, $user->guid);
 		$annotation_id ? $success++ : $error++;
 	}
