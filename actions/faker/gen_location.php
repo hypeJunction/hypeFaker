@@ -1,13 +1,12 @@
 <?php
 
-if (!elgg_is_active_plugin('countries')) {
-	return elgg_redirect_response(REFERRER);
-}
+use Faker\Factory;
 
 set_time_limit(0);
 $error = 0;
 $success = $error;
-// In Elgg 3.x, subtypes are stored as strings, no need for get_subtype_id()
+$locale = elgg_get_plugin_setting('locale', 'hypefaker', 'en_US');
+$faker = Factory::create($locale);
 $exclude_subtypes = ['messages', 'plugin', 'widget', 'site_notification'];
 $entities = new ElggBatch('elgg_get_entities', [
 	'limit' => 0,
@@ -22,10 +21,8 @@ $entities = new ElggBatch('elgg_get_entities', [
 		}
 	],
 ]);
-$countries = elgg_get_country_info(['name', 'capital']);
 foreach ($entities as $entity) {
-	$country = $countries[array_rand($countries, 1)];
-	$location = "{$country['capital']}, {$country['name']}";
+	$location = "{$faker->city()}, {$faker->country()}";
 	$entity->location = $location;
 	if ($entity->save()) {
 		error_log("New location for {$entity->guid}: {$entity->location}");

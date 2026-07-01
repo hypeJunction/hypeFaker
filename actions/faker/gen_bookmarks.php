@@ -19,7 +19,7 @@ for ($i = 0; $i < $count; $i++) {
 
 	foreach ($containers as $container) {
 		elgg_set_page_owner_guid($container->guid);
-		$access_array = get_write_access_array($owner->guid);
+		$access_array = elgg_get_write_access_array($owner->guid);
 		$access_id = array_rand($access_array, 1);
 		$bookmark = new \ElggBookmark();
 		$bookmark->owner_guid = $owner->guid;

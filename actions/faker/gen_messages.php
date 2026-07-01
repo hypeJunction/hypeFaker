@@ -60,19 +60,18 @@ foreach ($senders as $sender) {
 		$message_to->msg = 1;
 		$message_sent->msg = 1;
 		$message_to->__faker = true;
-		$message_from->__faker = true;
-		$success = $message_to->save();
-		$sucess_sent = $message_sent->save();
-		if ($success && $seccess_sent) {
+		$message_sent->__faker = true;
+		$saved_to = $message_to->save();
+		$saved_sent = $message_sent->save();
+		if ($saved_to && $saved_sent) {
 			$success++;
 			$message_to->access_id = ACCESS_PRIVATE;
 			$message_to->save();
 			$message_sent->access_id = ACCESS_PRIVATE;
 			$message_sent->save();
-			$message_contents = strip_tags($body);
-			$subject = elgg_echo('messages:email:subject');
-			$body = elgg_echo('messages:email:body', [$sender->name, $message_contents, elgg_get_site_url() . 'messages/inbox/' . $recipient->username, $sender->name, elgg_get_site_url() . 'messages/compose?send_to=' . $sender_guid]);
-			notify_user($recipient_guid, $sender_guid, $subject, $body);
+			if ($recipient instanceof \ElggUser && $sender instanceof \ElggUser) {
+				$recipient->notify('send', $message_to, [], $sender);
+			}
 		} else {
 			$error++;
 		}
