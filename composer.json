@@ -32,8 +32,7 @@
         "ext-curl": "*",
         "ext-intl": "*",
         "composer/installers": "^2.0",
-        "fakerphp/faker": "^1.23",
-        "elgg/elgg": "~7.0.0"
+        "fakerphp/faker": "^1.23"
     },
     "conflict": {
         "elgg/elgg": "<5.0"
@@ -47,5 +46,8 @@
         "allow-plugins": {
             "composer/installers": true
         }
+    },
+    "require-dev": {
+        "elgg/elgg": "~7.0.0"
     }
 }
